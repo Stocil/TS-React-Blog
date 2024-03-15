@@ -21,6 +21,12 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    gradient: true;
+  }
+}
+
 // TODO: add light theme
 const mode: PaletteMode = "dark";
 
@@ -56,6 +62,29 @@ export function Theme({ children }: ThemeProps) {
         defaultProps: {
           component: "section",
           maxWidth: "lg",
+        },
+      },
+      MuiButton: {
+        defaultProps: {
+          variant: "contained",
+        },
+        variants: [
+          {
+            props: { variant: "gradient" },
+            style: ({ theme }) => ({
+              backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main} 0%, #bfe9ff  51%, ${theme.palette.primary.main}  100%)`,
+              transition: "0.5s",
+              backgroundSize: "200% auto",
+              ":hover": {
+                backgroundPosition: "right center",
+              },
+            }),
+          },
+        ],
+        styleOverrides: {
+          root: {
+            textTransform: "none",
+          },
         },
       },
     },
