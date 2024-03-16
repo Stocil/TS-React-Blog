@@ -8,12 +8,13 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { FC } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import GradientText from "../UIkit/GradientText";
 import HeaderWrapper from "./Header.styles.tsx";
 
-function Header() {
+const Header: FC = () => {
   const isLogged = true;
 
   return (
@@ -50,6 +51,6 @@ function Header() {
       </Container>
     </AppBar>
   );
-}
+};
 
 export default Header;

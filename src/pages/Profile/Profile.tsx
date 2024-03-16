@@ -1,6 +1,7 @@
+import { FC } from "react";
 import { Link } from "react-router-dom";
 
-function Profile() {
+const Profile: FC = () => {
   return (
     <>
       <p>UserPage</p>
@@ -8,6 +9,6 @@ function Profile() {
       <Link to={"/"}>Home</Link>
     </>
   );
-}
+};
 
 export default Profile;
