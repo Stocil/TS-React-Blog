@@ -4,20 +4,24 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useRegisterUserMutation } from "../../../store/api/api.ts";
-import { FormInputs, InputFields, inputSchema } from "../../../types";
+import { FormInputs, InputFields, inputSchema } from "../../../types/form.tsx";
 import { userResponseSchema } from "../../../types/user.tsx";
+
+type ErrorData = {
+  errors: {
+    email?: string;
+    username?: string;
+  };
+};
 
 export function useAccountManager() {
   const path = useLocation().pathname;
   const [isShowPassword, setIsShowPassword] = useState(false);
-
-  // TODO Add loading, set error in root error
-  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+  const [registerUser, { error }] = useRegisterUserMutation();
 
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormInputs>({
     mode: "onBlur",
@@ -26,15 +30,6 @@ export function useAccountManager() {
 
   const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
     if (path === "/sign-in") {
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        console.log(formData);
-        throw new Error();
-      } catch (error) {
-        setError("root", {
-          message: "Invalid username or password",
-        });
-      }
     }
 
     if (path === "/sign-up") {
@@ -54,22 +49,35 @@ export function useAccountManager() {
             return userResponseSchema.parse(res);
           })
           .catch((e) => {
-            console.log(e.issues);
+            console.log(e);
           });
 
         if (response) {
-          console.log(response.data.user);
+          // TODO: Add to the store
+          localStorage.setItem("user", JSON.stringify(response.data.user));
         }
       }
     }
   };
-  if (error) {
-    if ("status" in error) {
-      const errorMessage =
-        "error" in error ? error.error : JSON.stringify(error.data);
-      console.log(errorMessage);
+
+  const renderError = () => {
+    if (error) {
+      if (
+        typeof error === "object" &&
+        "status" in error &&
+        typeof error.status === "number"
+      ) {
+        const errorData = error?.data as ErrorData;
+
+        if (errorData) {
+          return Object.keys(errorData.errors).map(
+            (error) =>
+              `${error} ${errorData.errors[error as keyof typeof errorData.errors]}`
+          );
+        }
+      }
     }
-  }
+  };
 
   const renderTitle = () => {
     if (path === "/sign-in") {
@@ -142,16 +150,18 @@ export function useAccountManager() {
   const formTitle = renderTitle();
   const buttonText = renderButtonText();
   const inputsFields = renderFields();
+  const errorText = renderError();
 
   return {
     formTitle,
     buttonText,
     inputsFields,
+    errorText,
     isShowPassword,
-    register,
-    errors,
     isValid,
     isSubmitting,
+    errors,
+    register,
     handleSubmit,
     setIsShowPassword,
     onSubmit,

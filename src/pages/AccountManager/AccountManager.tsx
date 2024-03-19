@@ -15,7 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 
 import { FormContainer, FormWrapper } from "./AccountManager.styles.tsx";
 import GradientText from "../../components/UIkit/GradientText";
-import { InputFields } from "../../types";
+import { InputFields } from "../../types/form.tsx";
 import { useAccountManager } from "./hooks/useAccountManager.tsx";
 
 const AccountManager: FC = () => {
@@ -23,11 +23,12 @@ const AccountManager: FC = () => {
     formTitle,
     buttonText,
     inputsFields,
+    errorText,
     isShowPassword,
-    register,
-    errors,
     isValid,
     isSubmitting,
+    errors,
+    register,
     handleSubmit,
     setIsShowPassword,
     onSubmit,
@@ -104,6 +105,16 @@ const AccountManager: FC = () => {
             {errors.root ? (
               <Typography color="error">{errors.root.message}</Typography>
             ) : null}
+
+            {errorText
+              ? errorText.map((error) => {
+                  return (
+                    <Typography key={error} color="error">
+                      {error}
+                    </Typography>
+                  );
+                })
+              : null}
 
             <Button
               type="submit"
