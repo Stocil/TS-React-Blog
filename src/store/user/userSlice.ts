@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PartialUser, User } from "../../types";
+import { PartialUser, User } from "../../types/user.tsx";
 
 type UserState = {
   user: PartialUser;

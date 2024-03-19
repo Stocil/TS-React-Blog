@@ -1,14 +1,5 @@
 import { z } from "zod";
 
-export type User = {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
-};
-export type PartialUser = Partial<User>;
-
 export type InputFields = {
   name: "username" | "email" | "password" | "repeatPassword";
   id: string;
@@ -18,8 +9,8 @@ export type InputFields = {
 
 export const inputSchema = z
   .object({
-    username: z.string().min(4, "Username is too short"),
-    email: z.string().email().optional(),
+    username: z.string().min(4, "Username is too short").optional(),
+    email: z.string().email(),
     password: z.string().min(5, "Password must be at least 5 characters"),
     repeatPassword: z
       .string()
