@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { User, UserAuthRegisterQuery } from "../../types/user.tsx";
+import { BASE_URL } from "../../constants";
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://blog.kata.academy/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     registerUser: builder.mutation<User, UserAuthRegisterQuery>({
       query: (userData) => ({

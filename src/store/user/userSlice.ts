@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { PartialUser, User } from "../../types/user.tsx";
+import { User } from "../../types/user.tsx";
 
 type UserState = {
-  user: PartialUser;
+  user: User | Record<string, never>;
   isLogged: boolean;
 };
 
+const initialUser = localStorage.getItem("user");
 const initialState: UserState = {
-  user: {},
+  user: initialUser ? JSON.parse(initialUser) : {},
   isLogged: false,
 };
 

@@ -1,26 +1,24 @@
 import { z } from "zod";
 
-export const userSchema = z.object({
-  username: z.string(),
-  email: z.string(),
-  token: z.string(),
-  image: z.string().optional(),
-});
-export const userWrapperSchema = z.object({
-  user: userSchema,
-});
 export const userResponseSchema = z.object({
-  data: userWrapperSchema,
+  data: z.object({
+    user: z.object({
+      username: z.string(),
+      email: z.string(),
+      token: z.string(),
+      image: z.string().optional(),
+      bio: z.string().optional(),
+    }),
+  }),
 });
 
 export type User = {
   email: string;
   token: string;
   username: string;
-  bio: string;
-  image: string;
+  bio?: string;
+  image?: string;
 };
-export type PartialUser = Partial<User>;
 
 export type UserAuthRegisterData = {
   username: string;

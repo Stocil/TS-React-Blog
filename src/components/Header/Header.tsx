@@ -13,9 +13,11 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import GradientText from "../UIkit/GradientText";
 import HeaderWrapper from "./Header.styles.tsx";
+import { useHeader } from "./hooks/useHeader.tsx";
+import { DEF_AVATAR } from "../../constants";
 
 const Header: FC = () => {
-  const isLogged = true;
+  const { userData, isLogged } = useHeader();
 
   return (
     <AppBar>
@@ -31,11 +33,11 @@ const Header: FC = () => {
                 </Button>
 
                 <Stack direction="row" alignItems="center" spacing={1}>
-                  <Typography>Stoc</Typography>
+                  <Typography>{userData.username}</Typography>
 
                   <Avatar
                     alt="avatar"
-                    src="https://i.pinimg.com/originals/69/3e/90/693e90297add0bf805e284ca669e00cd.jpg"
+                    src={userData.image ? userData.image : DEF_AVATAR}
                   />
                 </Stack>
 
