@@ -1,4 +1,4 @@
-import { Container, Paper, styled } from "@mui/material";
+import { Container, Paper, Stack, styled } from "@mui/material";
 
 export const FormWrapper = styled(Paper)(({ theme }) => ({
   borderRadius: "30px",
@@ -23,5 +23,9 @@ export const FormContainer = styled(Container)(({ theme }) => ({
     height: "100vh",
   },
 }));
-// { xs: 0, sm: 8 }
-// { xs: "100vh", sm: "calc(100vh - 96px)" }
+export const FormTipWrapper = styled(Stack)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+  flexDirection: "row",
+  gap: theme.spacing(1),
+  alignItems: "center",
+}));

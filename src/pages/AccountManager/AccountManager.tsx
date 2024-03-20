@@ -13,10 +13,16 @@ import {
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 
-import { FormContainer, FormWrapper } from "./AccountManager.styles.tsx";
+import {
+  FormContainer,
+  FormTipWrapper,
+  FormWrapper,
+} from "./AccountManager.styles.tsx";
 import GradientText from "../../components/UIkit/GradientText";
 import { InputFields } from "../../types/form.tsx";
 import { useAccountManager } from "./hooks/useAccountManager.tsx";
+import { Link } from "react-router-dom";
+import { SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
 
 const AccountManager: FC = () => {
   const {
@@ -24,6 +30,7 @@ const AccountManager: FC = () => {
     buttonText,
     inputsFields,
     errorText,
+    tip,
     isShowPassword,
     isValid,
     isSubmitting,
@@ -123,6 +130,18 @@ const AccountManager: FC = () => {
               {isSubmitting ? "Loading..." : buttonText}
             </Button>
           </form>
+
+          <FormTipWrapper>
+            <Typography component="p" variant="subtitle2" color="gray">
+              {tip[0]}
+            </Typography>
+
+            <Typography component="p" variant="subtitle2" color="primary">
+              <Link to={tip[1] === "Sign Up" ? SIGN_UP_URL : SIGN_IN_URL}>
+                {tip[1]}
+              </Link>
+            </Typography>
+          </FormTipWrapper>
         </FormWrapper>
       </Stack>
     </FormContainer>
