@@ -5,6 +5,7 @@ import HomePage from "../../pages/HomePage";
 import AccountManager from "../../pages/AccountManager";
 import Header from "../Header";
 import { PROFILE_URL, SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
+import PrivateRoute from "../PrivateRoute";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -14,12 +15,15 @@ const AppRoutes = () => {
         {
           path: "/",
           element: <HomePage />,
-          errorElement: <div>Error</div>,
         },
 
         {
           path: PROFILE_URL,
-          element: <Profile />,
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
         },
 
         {
@@ -32,6 +36,8 @@ const AppRoutes = () => {
           element: <AccountManager />,
         },
       ],
+      // TODO add error component
+      errorElement: <div>Error</div>,
     },
   ]);
 
