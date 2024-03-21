@@ -16,16 +16,7 @@ import {
   SIGN_UP_URL,
 } from "../../../constants";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
-import { SerializedError } from "@reduxjs/toolkit";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-
-type FetchError = FetchBaseQueryError | SerializedError | undefined;
-type ErrorData = {
-  errors: {
-    email?: string;
-    username?: string;
-  };
-};
+import { getErrorMessage } from "../../../utils/getErrorMessage.ts";
 
 export function useAccountManager() {
   const path = useLocation().pathname;
@@ -121,27 +112,10 @@ export function useAccountManager() {
     localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
   }
 
-  const renderError = (error: FetchError) => {
-    if (error) {
-      if (
-        typeof error === "object" &&
-        "status" in error &&
-        typeof error.status === "number"
-      ) {
-        const errorData = error?.data as ErrorData;
-
-        if (errorData) {
-          return Object.keys(errorData.errors).map(
-            (error) =>
-              `${error} ${errorData.errors[error as keyof typeof errorData.errors]}`
-          );
-        }
-      }
-    }
-  };
-
   const errorText =
-    path === SIGN_IN_URL ? renderError(loginError) : renderError(registerError);
+    path === SIGN_IN_URL
+      ? getErrorMessage(loginError)
+      : getErrorMessage(registerError);
 
   return {
     path,

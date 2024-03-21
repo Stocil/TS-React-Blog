@@ -3,6 +3,7 @@ import {
   User,
   UserAuthLoginQuery,
   UserAuthRegisterQuery,
+  UserUpdateQuery,
 } from "../../types/user.tsx";
 import { BASE_URL } from "../../constants";
 
@@ -31,7 +32,23 @@ export const api = createApi({
         body: userData,
       }),
     }),
+
+    updateUser: builder.mutation<User, UserUpdateQuery>({
+      query: ({ user, token }) => ({
+        url: "/user",
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: { user },
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = api;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useUpdateUserMutation,
+} = api;

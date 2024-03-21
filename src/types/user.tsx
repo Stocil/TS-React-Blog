@@ -33,3 +33,13 @@ export type UserAuthLoginData = Omit<UserAuthRegisterData, "username">;
 export type UserAuthLoginQuery = {
   user: UserAuthLoginData;
 };
+
+export type UserUpdateQuery = {
+  user: {
+    username: string;
+    email: string;
+    password?: string;
+    image?: string;
+  };
+  token: string;
+};

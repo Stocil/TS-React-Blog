@@ -16,7 +16,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import {
   FormContainer,
   FormTipWrapper,
-  FormWrapper,
   LoggedFormWrapper,
 } from "./AccountManager.styles.tsx";
 import GradientText from "../../components/UIkit/GradientText";
@@ -25,6 +24,7 @@ import { useAccountManager } from "./hooks/useAccountManager.tsx";
 import { Link } from "react-router-dom";
 import { SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
 import { useRenderForm } from "./hooks/useRenderForm.tsx";
+import FormWrapper from "../../components/UIkit/FormWrapper";
 
 const AccountManager: FC = () => {
   const {
@@ -43,6 +43,7 @@ const AccountManager: FC = () => {
   } = useAccountManager();
 
   const { formTitle, buttonText, inputsFields, tip } = useRenderForm();
+
   const renderFields = (fields: InputFields[]) => {
     return fields.map((field) => {
       if (field.type === "password") {
