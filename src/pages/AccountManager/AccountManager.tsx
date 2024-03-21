@@ -17,35 +17,40 @@ import {
   FormContainer,
   FormTipWrapper,
   FormWrapper,
+  LoggedFormWrapper,
 } from "./AccountManager.styles.tsx";
 import GradientText from "../../components/UIkit/GradientText";
 import { InputFields } from "../../types/form.tsx";
 import { useAccountManager } from "./hooks/useAccountManager.tsx";
 import { Link } from "react-router-dom";
 import { SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
+import { useRenderForm } from "./hooks/useRenderForm.tsx";
 
 const AccountManager: FC = () => {
   const {
-    formTitle,
-    buttonText,
-    inputsFields,
-    errorText,
-    tip,
+    path,
+    isLogged,
     isShowPassword,
     isValid,
     isSubmitting,
     errors,
+    errorText,
     register,
     handleSubmit,
     setIsShowPassword,
     onSubmit,
+    handleLogOut,
   } = useAccountManager();
 
+  const { formTitle, buttonText, inputsFields, tip } = useRenderForm();
   const renderFields = (fields: InputFields[]) => {
     return fields.map((field) => {
       if (field.type === "password") {
         return (
-          <FormControl key={field.name} sx={{ width: 1 }} variant="outlined">
+          <FormControl
+            key={field.name + path}
+            sx={{ width: 1 }}
+            variant="outlined">
             <InputLabel
               color={errors[field.name]?.message ? "error" : "primary"}
               htmlFor={field.name}>
@@ -83,7 +88,7 @@ const AccountManager: FC = () => {
 
       return (
         <TextField
-          key={field.name}
+          key={field.name + path}
           id={field.id}
           label={field.label}
           variant={"outlined"}
@@ -102,46 +107,60 @@ const AccountManager: FC = () => {
     <FormContainer>
       <Stack direction="row" justifyContent="center">
         <FormWrapper elevation={8}>
-          <GradientText variant="h4" textAlign="center">
-            {formTitle}
-          </GradientText>
+          {isLogged ? (
+            <LoggedFormWrapper>
+              <GradientText variant="h4" textAlign="center">
+                You are already logged in
+              </GradientText>
 
-          <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
-            {renderFields(inputsFields)}
+              <Button size="large" onClick={handleLogOut}>
+                Log out?
+              </Button>
+            </LoggedFormWrapper>
+          ) : (
+            <>
+              <GradientText variant="h4" textAlign="center">
+                {formTitle}
+              </GradientText>
 
-            {errors.root ? (
-              <Typography color="error">{errors.root.message}</Typography>
-            ) : null}
+              <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+                {renderFields(inputsFields)}
 
-            {errorText
-              ? errorText.map((error) => {
-                  return (
-                    <Typography key={error} color="error">
-                      {error}
-                    </Typography>
-                  );
-                })
-              : null}
+                {errors.root ? (
+                  <Typography color="error">{errors.root.message}</Typography>
+                ) : null}
 
-            <Button
-              type="submit"
-              size="large"
-              disabled={!isValid || isSubmitting}>
-              {isSubmitting ? "Loading..." : buttonText}
-            </Button>
-          </form>
+                {errorText
+                  ? errorText.map((error) => {
+                      return (
+                        <Typography key={error} color="error">
+                          {error}
+                        </Typography>
+                      );
+                    })
+                  : null}
 
-          <FormTipWrapper>
-            <Typography component="p" variant="subtitle2" color="gray">
-              {tip[0]}
-            </Typography>
+                <Button
+                  type="submit"
+                  size="large"
+                  disabled={!isValid || isSubmitting}>
+                  {isSubmitting ? "Loading..." : buttonText}
+                </Button>
+              </form>
 
-            <Typography component="p" variant="subtitle2" color="primary">
-              <Link to={tip[1] === "Sign Up" ? SIGN_UP_URL : SIGN_IN_URL}>
-                {tip[1]}
-              </Link>
-            </Typography>
-          </FormTipWrapper>
+              <FormTipWrapper>
+                <Typography component="p" variant="subtitle2" color="gray">
+                  {tip[0]}
+                </Typography>
+
+                <Typography component="p" variant="subtitle2" color="primary">
+                  <Link to={tip[1] === "Sign Up" ? SIGN_UP_URL : SIGN_IN_URL}>
+                    {tip[1]}
+                  </Link>
+                </Typography>
+              </FormTipWrapper>
+            </>
+          )}
         </FormWrapper>
       </Stack>
     </FormContainer>

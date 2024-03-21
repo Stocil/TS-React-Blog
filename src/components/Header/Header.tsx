@@ -19,7 +19,7 @@ import { DEF_AVATAR, PROFILE_URL, SIGN_IN_URL } from "../../constants";
 import { Link, Outlet } from "react-router-dom";
 
 const Header: FC = () => {
-  const { userData, isLogged } = useHeader();
+  const { path, userData, isLogged, handleLogOut } = useHeader();
 
   return (
     <>
@@ -48,12 +48,12 @@ const Header: FC = () => {
                     </Link>
                   </Stack>
 
-                  <IconButton>
+                  <IconButton onClick={handleLogOut}>
                     <LogoutIcon color="error" />
                   </IconButton>
                 </Stack>
               ) : (
-                <Link to={SIGN_IN_URL}>
+                <Link to={SIGN_IN_URL} state={{ prevPath: path }}>
                   <Button variant="gradient">Sign in</Button>
                 </Link>
               )}

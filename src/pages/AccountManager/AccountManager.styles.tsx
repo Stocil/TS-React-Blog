@@ -13,6 +13,12 @@ export const FormWrapper = styled(Paper)(({ theme }) => ({
   background: `linear-gradient(130deg, ${theme.palette.background.default} 5% , #1a2239 65%, ${theme.palette.background.default} 95%)`,
 }));
 
+export const LoggedFormWrapper = styled(Stack)(({ theme }) => ({
+  gap: theme.spacing(4),
+  justifyContent: "center",
+  alignItems: "center",
+}));
+
 export const FormContainer = styled(Container)(({ theme }) => ({
   marginTop: theme.spacing(8),
   paddingTop: "100px",
@@ -23,6 +29,7 @@ export const FormContainer = styled(Container)(({ theme }) => ({
     height: "100vh",
   },
 }));
+
 export const FormTipWrapper = styled(Stack)(({ theme }) => ({
   marginTop: theme.spacing(1),
   flexDirection: "row",

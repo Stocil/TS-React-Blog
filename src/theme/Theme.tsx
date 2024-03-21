@@ -27,7 +27,7 @@ declare module "@mui/material/Button" {
   }
 }
 
-// TODO: add light theme
+// TODO: add light theme, try to change base color to primary
 const mode: PaletteMode = "dark";
 
 export function Theme({ children }: ThemeProps) {

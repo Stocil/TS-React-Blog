@@ -1,14 +1,25 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { useRegisterUserMutation } from "../../../store/api/api.ts";
-import { FormInputs, InputFields, inputSchema } from "../../../types/form.tsx";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "../../../store/api/api.ts";
+import { FormInputs, inputSchema } from "../../../types/form.tsx";
 import { userResponseSchema } from "../../../types/user.tsx";
 import { useActions } from "../../../hooks/useActions.ts";
-import { SIGN_IN_URL, SIGN_UP_URL } from "../../../constants";
+import {
+  LOCAL_STORAGE_USER_KEY,
+  SIGN_IN_URL,
+  SIGN_UP_URL,
+} from "../../../constants";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 
+type FetchError = FetchBaseQueryError | SerializedError | undefined;
 type ErrorData = {
   errors: {
     email?: string;
@@ -18,33 +29,71 @@ type ErrorData = {
 
 export function useAccountManager() {
   const path = useLocation().pathname;
+  const redirectPath = useLocation().state?.prevPath || "/";
+  const navigate = useNavigate();
+
+  const isLogged = !!useTypedSelector((state) => state.user.user.token);
   const [isShowPassword, setIsShowPassword] = useState(false);
-  const [registerUser, { error }] = useRegisterUserMutation();
-  const { registerUser: registerUserAction } = useActions();
+
+  const [registerUser, { error: registerError }] = useRegisterUserMutation();
+  const [loginUser, { error: loginError }] = useLoginUserMutation();
+  const {
+    registerUser: registerUserAction,
+    logInUser: loginUserAction,
+    logOutUser,
+  } = useActions();
 
   const {
     register,
     handleSubmit,
+    clearErrors,
+    reset,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormInputs>({
     mode: "onBlur",
     resolver: zodResolver(inputSchema),
   });
 
+  useEffect(() => {
+    reset();
+    clearErrors();
+  }, [path, clearErrors, reset]);
+
   const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
     if (path === SIGN_IN_URL) {
+      const user = {
+        user: {
+          email: formData.email,
+          password: formData.password,
+        },
+      };
+
+      const response = await loginUser(user)
+        .then((res) => {
+          return userResponseSchema.parse(res);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      if (response) {
+        localStorage.setItem(
+          LOCAL_STORAGE_USER_KEY,
+          JSON.stringify(response.data.user)
+        );
+        loginUserAction(response.data.user);
+        navigate(redirectPath, { replace: true });
+      }
     }
 
     if (path === SIGN_UP_URL) {
       if (formData.username) {
-        const userData = {
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        };
-
         const user = {
-          user: userData,
+          user: {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password,
+          },
         };
 
         const response = await registerUser(user)
@@ -56,14 +105,23 @@ export function useAccountManager() {
           });
 
         if (response) {
-          localStorage.setItem("user", JSON.stringify(response.data.user));
+          localStorage.setItem(
+            LOCAL_STORAGE_USER_KEY,
+            JSON.stringify(response.data.user)
+          );
           registerUserAction(response.data.user);
+          navigate(redirectPath, { replace: true });
         }
       }
     }
   };
 
-  const renderError = () => {
+  function handleLogOut() {
+    logOutUser();
+    localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+  }
+
+  const renderError = (error: FetchError) => {
     if (error) {
       if (
         typeof error === "object" &&
@@ -82,100 +140,21 @@ export function useAccountManager() {
     }
   };
 
-  const renderTitle = () => {
-    if (path === SIGN_IN_URL) {
-      return "Sign-in";
-    }
+  const errorText =
+    path === SIGN_IN_URL ? renderError(loginError) : renderError(registerError);
 
-    return "Sign-up";
-  };
-
-  const renderButtonText = () => {
-    if (path === SIGN_IN_URL) {
-      return "Login";
-    }
-
-    return "Create";
-  };
-
-  const renderTip = () => {
-    if (path === SIGN_IN_URL) {
-      return ["Don`t have an account?", "Sign Up"];
-    }
-
-    return ["Already have an account?", "Sign In"];
-  };
-
-  const renderFields = () => {
-    let fields: InputFields[] = [];
-
-    if (path === SIGN_IN_URL) {
-      fields = [
-        {
-          name: "email",
-          id: "email",
-          label: "Email Address",
-          type: "email",
-        },
-        {
-          name: "password",
-          id: "password",
-          label: "Password",
-          type: "password",
-        },
-      ];
-    }
-
-    if (path === SIGN_UP_URL) {
-      fields = [
-        {
-          name: "username",
-          id: "username",
-          label: "Username",
-          type: "text",
-        },
-        {
-          name: "email",
-          id: "email",
-          label: "Email Address",
-          type: "email",
-        },
-        {
-          name: "password",
-          id: "password",
-          label: "Password",
-          type: "password",
-        },
-        {
-          name: "repeatPassword",
-          id: "repeatPassword",
-          label: "Repeat Password",
-          type: "password",
-        },
-      ];
-    }
-
-    return fields;
-  };
-
-  const formTitle = renderTitle();
-  const buttonText = renderButtonText();
-  const inputsFields = renderFields();
-  const errorText = renderError();
-  const tip = renderTip();
   return {
-    formTitle,
-    buttonText,
-    inputsFields,
-    errorText,
-    tip,
+    path,
+    isLogged,
     isShowPassword,
     isValid,
     isSubmitting,
     errors,
+    errorText,
     register,
     handleSubmit,
     setIsShowPassword,
     onSubmit,
+    handleLogOut,
   } as const;
 }
