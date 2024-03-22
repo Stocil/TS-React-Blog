@@ -3,10 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  useLoginUserMutation,
-  useRegisterUserMutation,
-} from "../../../store/api/api.ts";
 import { FormInputs, inputSchema } from "../../../types/form.tsx";
 import { userResponseSchema } from "../../../types/user.tsx";
 import { useActions } from "../../../hooks/useActions.ts";
@@ -17,6 +13,10 @@ import {
 } from "../../../constants";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
 import { getErrorMessage } from "../../../utils/getErrorMessage.ts";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "../../../store/api/userApi.ts";
 
 export function useAccountManager() {
   const path = useLocation().pathname;

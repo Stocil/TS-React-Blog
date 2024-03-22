@@ -4,12 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { LOCAL_STORAGE_USER_KEY } from "../../../constants";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
-import { useUpdateUserMutation } from "../../../store/api/api.ts";
 import { userResponseSchema } from "../../../types/user.tsx";
 import { UpdateFormInputs, updateInputSchema } from "../../../types/form.tsx";
 import { getErrorMessage } from "../../../utils/getErrorMessage.ts";
 import { useActions } from "../../../hooks/useActions.ts";
 import { getToken } from "../../../utils/getToken.ts";
+import { useUpdateUserMutation } from "../../../store/api/userApi.ts";
 
 export const useProfile = () => {
   const user = useTypedSelector((state) => state.user.user);
