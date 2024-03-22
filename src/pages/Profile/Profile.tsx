@@ -1,6 +1,5 @@
 import { FC } from "react";
 import {
-  Avatar,
   Button,
   Container,
   FormControl,
@@ -14,8 +13,6 @@ import {
 } from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
-
-import { DEF_AVATAR } from "../../constants";
 import FormWrapper from "../../components/UIkit/FormWrapper";
 import { useProfile } from "./hooks/useProfile.tsx";
 import { UpdateInputFields } from "../../types/form.tsx";
@@ -24,7 +21,6 @@ import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx
 
 const Profile: FC = () => {
   const {
-    user,
     isSnackOpen,
     isShowPassword,
     isValid,
@@ -97,13 +93,7 @@ const Profile: FC = () => {
 
   return (
     <Container>
-      <Stack direction="row" justifyContent="center" spacing={5} mt={5}>
-        <Avatar
-          alt="big avatar"
-          src={user.image ? user.image : DEF_AVATAR}
-          sx={{ height: 350, width: 350, borderRadius: 2 }}
-        />
-
+      <Stack alignItems="center" mt={8} pt={12}>
         <FormWrapper elevation={8} sx={{ gap: 3 }}>
           <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
             {renderFields(fields)}

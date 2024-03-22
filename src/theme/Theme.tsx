@@ -76,7 +76,7 @@ export function Theme({ children }: ThemeProps) {
           {
             props: { variant: "gradient" },
             style: ({ theme }) => ({
-              backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main} 0%, #bfe9ff  51%, ${theme.palette.primary.main}  100%)`,
+              backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main} 0%, #eda7f1  51%, ${theme.palette.primary.main}  100%)`,
               transition: "0.5s",
               backgroundSize: "200% auto",
               ":hover": {

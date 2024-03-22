@@ -69,7 +69,6 @@ export const useProfile = () => {
   }
 
   return {
-    user,
     isSnackOpen,
     isShowPassword,
     isValid,

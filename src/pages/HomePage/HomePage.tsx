@@ -1,10 +1,11 @@
 import { FC } from "react";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
+import Article from "../../components/Article";
 
 const HomePage: FC = () => {
   return (
-    <Container>
-      <Typography variant="h2">Home page</Typography>
+    <Container sx={{ mt: 8 }}>
+      <Article />
     </Container>
   );
 };
