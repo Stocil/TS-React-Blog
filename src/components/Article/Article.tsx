@@ -8,8 +8,9 @@ import {
   ArticleUserWrapper,
   ArticleWrapper,
 } from "./Article.styles.tsx";
+import { FC } from "react";
 
-const Article = () => {
+const Article: FC = () => {
   return (
     <ArticleWrapper elevation={8}>
       <Stack spacing={1}>

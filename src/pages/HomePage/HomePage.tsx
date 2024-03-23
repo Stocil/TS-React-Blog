@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Container } from "@mui/material";
-import Article from "../../components/Article";
+import ArticleList from "../../components/ArticleList";
 
 const HomePage: FC = () => {
   return (
     <Container sx={{ mt: 8 }}>
-      <Article />
+      <ArticleList />
     </Container>
   );
 };
