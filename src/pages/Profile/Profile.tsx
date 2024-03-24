@@ -18,6 +18,7 @@ import { useProfile } from "./hooks/useProfile.tsx";
 import { UpdateInputFields } from "../../types/form.tsx";
 import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
 import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
+import GradientText from "../../components/UIkit/GradientText";
 
 const Profile: FC = () => {
   const {
@@ -95,6 +96,8 @@ const Profile: FC = () => {
     <Container>
       <Stack alignItems="center" mt={8} pt={12}>
         <FormWrapper elevation={8} sx={{ gap: 3 }}>
+          <GradientText variant="h4">Editing a profile</GradientText>
+
           <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
             {renderFields(fields)}
 

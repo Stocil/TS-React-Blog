@@ -1,10 +1,11 @@
 import { api } from "./api.ts";
-import { ArticleResponseType } from "../../types/articles.tsx";
+import { ArticlesResponseType } from "../../types/articles.tsx";
 
 const articlesApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getArticles: builder.query<ArticleResponseType, number>({
-      query: (offset) => `/articles?limit=5&offset=${offset}`,
+    getArticles: builder.query<ArticlesResponseType, number>({
+      query: (page) =>
+        `/articles?limit=5&offset=${page === 0 ? 0 : (page - 1) * 5}`,
     }),
   }),
 });

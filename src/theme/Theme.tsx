@@ -38,7 +38,7 @@ export function Theme({ children }: ThemeProps) {
         main: indigo[200],
       },
       secondary: {
-        main: indigo[300],
+        main: "#eda7f1",
       },
       dark: {
         light: "#2D2D2D",

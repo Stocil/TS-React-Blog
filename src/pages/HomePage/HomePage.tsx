@@ -4,7 +4,7 @@ import ArticleList from "../../components/ArticleList";
 
 const HomePage: FC = () => {
   return (
-    <Container sx={{ mt: 8 }}>
+    <Container sx={{ mt: 8, mb: 4 }}>
       <ArticleList />
     </Container>
   );
