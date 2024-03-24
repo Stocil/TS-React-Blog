@@ -1,5 +1,7 @@
 import { api } from "./api.ts";
 import {
+  FollowedUser,
+  FollowUserQuery,
   User,
   UserAuthLoginQuery,
   UserAuthRegisterQuery,
@@ -41,6 +43,28 @@ const userApi = api.injectEndpoints({
         body: { user },
       }),
     }),
+
+    followToUser: builder.mutation<FollowedUser, FollowUserQuery>({
+      query: ({ username, token }) => ({
+        url: `/profiles/${username}/follow`,
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        body: username,
+      }),
+    }),
+
+    unfollowFromUser: builder.mutation<FollowedUser, FollowUserQuery>({
+      query: ({ username, token }) => ({
+        url: `/profiles/${username}/follow`,
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+        },
+        body: username,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -49,4 +73,6 @@ export const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useUpdateUserMutation,
+  useFollowToUserMutation,
+  useUnfollowFromUserMutation,
 } = userApi;

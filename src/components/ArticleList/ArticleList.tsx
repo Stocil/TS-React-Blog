@@ -1,13 +1,22 @@
 import { FC } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { Pagination, Stack, Typography } from "@mui/material";
+
 import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
-import { v4 as uuidv4 } from "uuid";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
 
 const ArticleList: FC = () => {
-  const { data, isFetching, error, currentPage, maxPage, handleChangePage } =
-    useArticleList();
+  const {
+    data,
+    followed,
+    isFetching,
+    error,
+    currentPage,
+    maxPage,
+    handleChangePage,
+    handleFollowToUser,
+  } = useArticleList();
 
   if (isFetching) {
     return <Typography>Loading...</Typography>;
@@ -27,7 +36,14 @@ const ArticleList: FC = () => {
         {data ? (
           data.articles[0] ? (
             data.articles.map((article) => {
-              return <Article key={uuidv4()} article={article} />;
+              return (
+                <Article
+                  key={uuidv4()}
+                  article={article}
+                  isFollow={followed.includes(article.author.username)}
+                  onFollow={handleFollowToUser}
+                />
+              );
             })
           ) : (
             <ErrorMessage variant="h3" alignSelf="center">

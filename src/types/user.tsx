@@ -43,3 +43,17 @@ export type UserUpdateQuery = {
   };
   token: string;
 };
+
+export type FollowUserQuery = {
+  username: string;
+  token: string;
+};
+
+export type FollowedUser = {
+  profile: {
+    username: string;
+    bio?: string;
+    image: string;
+    following: boolean;
+  };
+};

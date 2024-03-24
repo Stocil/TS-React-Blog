@@ -7,7 +7,17 @@ const articlesApi = api.injectEndpoints({
       query: (page) =>
         `/articles?limit=5&offset=${page === 0 ? 0 : (page - 1) * 5}`,
     }),
+
+    getFeed: builder.query<ArticlesResponseType, string>({
+      query: (token) => ({
+        url: `/feed`,
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetArticlesQuery } = articlesApi;
+export const { useGetArticlesQuery, useGetFeedQuery } = articlesApi;
