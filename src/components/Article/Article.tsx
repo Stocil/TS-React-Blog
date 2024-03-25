@@ -91,7 +91,7 @@ const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
                   sx={{
                     border: (theme) =>
                       isFollow
-                        ? `2px solid ${theme.palette.secondary.main}`
+                        ? `3px solid ${theme.palette.secondary.main}`
                         : null,
                   }}
                 />
@@ -110,7 +110,7 @@ const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
               src={article.author.image}
               sx={{
                 border: (theme) =>
-                  isFollow ? `2px solid ${theme.palette.secondary.main}` : null,
+                  isFollow ? `3px solid ${theme.palette.secondary.main}` : null,
               }}
             />
           </HtmlTooltip>
