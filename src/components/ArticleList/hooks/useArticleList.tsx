@@ -10,6 +10,7 @@ import {
   useFollowToUserMutation,
   useUnfollowFromUserMutation,
 } from "../../../store/api/userApi.ts";
+import { AddToFollowerData } from "../../../types/user.tsx";
 
 export const useArticleList = () => {
   const navigate = useNavigate();
@@ -34,14 +35,17 @@ export const useArticleList = () => {
     }
   }, [getArticles, data]);
 
-  function handleFollowToUser(username: string, isFollow: boolean) {
+  function handleFollowToUser(
+    userToFollow: AddToFollowerData,
+    isFollow: boolean
+  ) {
     if (user.token) {
       if (isFollow) {
-        unfollow({ username: username, token: token });
-        removeFromFollower(username);
+        unfollow({ username: userToFollow.username, token: token });
+        removeFromFollower(userToFollow.username);
       } else {
-        follow({ username: username, token: token });
-        addToFollower(username);
+        follow({ username: userToFollow.username, token: token });
+        addToFollower(userToFollow);
       }
     } else {
       navigate(SIGN_IN_URL, { replace: true });

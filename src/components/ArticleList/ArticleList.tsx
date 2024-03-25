@@ -5,6 +5,7 @@ import { Pagination, Stack, Typography } from "@mui/material";
 import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
+import { isUserInFollowers } from "../../utils/isUserInFollowers.ts";
 
 const ArticleList: FC = () => {
   const {
@@ -40,7 +41,10 @@ const ArticleList: FC = () => {
                 <Article
                   key={uuidv4()}
                   article={article}
-                  isFollow={followed.includes(article.author.username)}
+                  isFollow={isUserInFollowers(
+                    followed,
+                    article.author.username
+                  )}
                   onFollow={handleFollowToUser}
                 />
               );

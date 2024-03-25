@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../types/user.tsx";
+import { AddToFollowerData, User } from "../../types/user.tsx";
 import {
   LOCAL_STORAGE_USER_FOLLOWING_KEY,
   LOCAL_STORAGE_USER_KEY,
@@ -7,7 +7,7 @@ import {
 
 type UserState = {
   user: User | Record<string, never>;
-  following: string[];
+  following: AddToFollowerData[];
 };
 
 const initialUser = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
@@ -38,8 +38,23 @@ export const userSlice = createSlice({
       state.user = {};
     },
 
-    addToFollower: (state, action: PayloadAction<string>) => {
-      if (!state.following.includes(action.payload)) {
+    addToFollower: (state, action: PayloadAction<AddToFollowerData>) => {
+      // if (!state.following.includes(action.payload.username)) {
+      //   state.following.push(action.payload);
+      //
+      //   localStorage.setItem(
+      //     LOCAL_STORAGE_USER_FOLLOWING_KEY,
+      //     JSON.stringify(state.following)
+      //   );
+      // }
+      let flag = 0;
+      state.following.map((user) => {
+        if (user.username === action.payload.username) {
+          flag = 1;
+        }
+      });
+
+      if (flag === 0) {
         state.following.push(action.payload);
 
         localStorage.setItem(
@@ -51,7 +66,7 @@ export const userSlice = createSlice({
 
     removeFromFollower: (state, action: PayloadAction<string>) => {
       state.following = state.following.filter(
-        (follower) => follower !== action.payload
+        (user) => user.username !== action.payload
       );
 
       localStorage.setItem(

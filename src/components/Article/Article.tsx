@@ -17,11 +17,12 @@ import {
 } from "./Article.styles.tsx";
 import { ArticleType } from "../../types/articles.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
+import { AddToFollowerData } from "../../types/user.tsx";
 
 type ArticleProps = {
   article: ArticleType;
   isFollow: boolean;
-  onFollow: (username: string, isFollow: boolean) => void;
+  onFollow: (userToFollow: AddToFollowerData, isFollow: boolean) => void;
 };
 
 const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
@@ -54,7 +55,7 @@ const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
         <ArticleTagsWrapper>
           {article.tagList
             ? article.tagList.map((tag, index) => {
-                if (index < 6) {
+                if (index < 6 && tag != "") {
                   return (
                     <ArticleTag key={tag + index}>
                       {getLimitedString(tag, 10)}
@@ -98,8 +99,7 @@ const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
 
                 <Stack spacing={1}>
                   <Typography>{article.author.username}</Typography>
-                  <Button
-                    onClick={() => onFollow(article.author.username, isFollow)}>
+                  <Button onClick={() => onFollow(article.author, isFollow)}>
                     {isFollow ? "Unfollow" : "Follow"}
                   </Button>
                 </Stack>

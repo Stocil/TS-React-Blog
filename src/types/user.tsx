@@ -57,3 +57,10 @@ export type FollowedUser = {
     following: boolean;
   };
 };
+
+export type AddToFollowerData = {
+  username: string;
+  image: string;
+  following: boolean;
+  bio?: string;
+};
