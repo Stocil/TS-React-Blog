@@ -13,12 +13,21 @@ import {
 } from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+
 import FormWrapper from "../../components/UIkit/FormWrapper";
-import { useProfile } from "./hooks/useProfile.tsx";
-import { UpdateInputFields } from "../../types/form.tsx";
-import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
-import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
 import GradientText from "../../components/UIkit/GradientText";
+import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
+import { UpdateInputFields } from "../../types/form.tsx";
+import { useProfile } from "./hooks/useProfile.tsx";
+import { useProfileForm } from "./hooks/useProfileForm.tsx";
+import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
+import { ArticleAuthorData } from "../../components/ArticleAuthorData/ArticleAuthorData.tsx";
+import { ErrorMessage } from "../../components/UIkit/ErrorMessage/ErrorMessage.tsx";
+import {
+  FollowingWrapper,
+  ProfileInner,
+  ProfileWrapper,
+} from "./Profile.styles.tsx";
 
 const Profile: FC = () => {
   const {
@@ -33,8 +42,9 @@ const Profile: FC = () => {
     handleSnackOpen,
     setIsShowPassword,
     onSubmit,
-  } = useProfile();
+  } = useProfileForm();
   const { fields } = useRenderProfileForm();
+  const { followingUsers } = useProfile();
 
   const renderFields = (fields: UpdateInputFields[]) => {
     return fields.map((field) => {
@@ -94,36 +104,58 @@ const Profile: FC = () => {
 
   return (
     <Container>
-      <Stack alignItems="center" mt={8} pt={12}>
-        <FormWrapper elevation={8} sx={{ gap: 3 }}>
-          <GradientText variant="h4">Editing a profile</GradientText>
+      <ProfileWrapper>
+        <ProfileInner>
+          <Stack spacing={3} textAlign="center">
+            <GradientText variant="h4">Following authors</GradientText>
 
-          <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
-            {renderFields(fields)}
-
-            {errors.root ? (
-              <Typography color="error">{errors.root.message}</Typography>
-            ) : null}
-
-            {errorText
-              ? errorText.map((error) => {
+            <FollowingWrapper>
+              {followingUsers[0] ? (
+                followingUsers.map((user) => {
                   return (
-                    <Typography key={error} color="error">
-                      {error}
-                    </Typography>
+                    <ArticleAuthorData
+                      key={user.username}
+                      author={user}
+                      isFollow={true}
+                    />
                   );
                 })
-              : null}
+              ) : (
+                <ErrorMessage variant="h5">There no authors yet</ErrorMessage>
+              )}
+            </FollowingWrapper>
+          </Stack>
 
-            <Button
-              type="submit"
-              size="large"
-              disabled={!isValid || isSubmitting}>
-              {isSubmitting ? "Loading..." : "Save"}
-            </Button>
-          </form>
-        </FormWrapper>
-      </Stack>
+          <FormWrapper elevation={8} sx={{ gap: 3, flexGrow: 1 }}>
+            <GradientText variant="h4">Editing a profile</GradientText>
+
+            <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+              {renderFields(fields)}
+
+              {errors.root ? (
+                <Typography color="error">{errors.root.message}</Typography>
+              ) : null}
+
+              {errorText
+                ? errorText.map((error) => {
+                    return (
+                      <Typography key={error} color="error">
+                        {error}
+                      </Typography>
+                    );
+                  })
+                : null}
+
+              <Button
+                type="submit"
+                size="large"
+                disabled={!isValid || isSubmitting}>
+                {isSubmitting ? "Loading..." : "Save"}
+              </Button>
+            </form>
+          </FormWrapper>
+        </ProfileInner>
+      </ProfileWrapper>
 
       <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen} />
     </Container>

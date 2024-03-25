@@ -1,7 +1,7 @@
-import { AddToFollowerData } from "../types/user.tsx";
+import { FollowingUserData } from "../types/user.tsx";
 
 export function isUserInFollowers(
-  users: AddToFollowerData[],
+  users: FollowingUserData[],
   username: string
 ) {
   let flag = 0;
@@ -10,8 +10,6 @@ export function isUserInFollowers(
       flag = 1;
     }
   });
-
-  console.log(username, !!flag);
 
   return !!flag;
 }
