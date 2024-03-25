@@ -1,6 +1,6 @@
 import { api } from "./api.ts";
 import {
-  FollowedUser,
+  FollowingUser,
   FollowUserQuery,
   User,
   UserAuthLoginQuery,
@@ -44,7 +44,7 @@ const userApi = api.injectEndpoints({
       }),
     }),
 
-    followToUser: builder.mutation<FollowedUser, FollowUserQuery>({
+    followToUser: builder.mutation<FollowingUser, FollowUserQuery>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}/follow`,
         method: "POST",
@@ -55,7 +55,7 @@ const userApi = api.injectEndpoints({
       }),
     }),
 
-    unfollowFromUser: builder.mutation<FollowedUser, FollowUserQuery>({
+    unfollowFromUser: builder.mutation<FollowingUser, FollowUserQuery>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}/follow`,
         method: "DELETE",

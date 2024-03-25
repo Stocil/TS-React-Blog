@@ -2,36 +2,27 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Button, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 
 import { ArticleTag } from "../UIkit/ArticleTag/ArticleTag.tsx";
 import {
   ArticleDescription,
   ArticleInfoWrapper,
   ArticleTagsWrapper,
-  ArticleUserAvatar,
   ArticleUserInner,
   ArticleUserWrapper,
   ArticleWrapper,
-  HtmlTooltip,
 } from "./Article.styles.tsx";
 import { ArticleType } from "../../types/articles.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
-import { AddToFollowerData } from "../../types/user.tsx";
+import { ArticleAuthorData } from "../ArticleAuthorData/ArticleAuthorData.tsx";
 
 type ArticleProps = {
   article: ArticleType;
   isFollow: boolean;
-  onFollow: (userToFollow: AddToFollowerData, isFollow: boolean) => void;
 };
 
-const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
-  const data = new Date(article.createdAt).toLocaleDateString("en", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-
+const Article: FC<ArticleProps> = ({ article, isFollow }) => {
   return (
     <ArticleWrapper elevation={8}>
       <Stack spacing={1}>
@@ -73,47 +64,11 @@ const Article: FC<ArticleProps> = ({ article, onFollow, isFollow }) => {
 
       <ArticleUserWrapper>
         <ArticleUserInner>
-          <Stack textAlign="right">
-            <Typography variant="h6">{article.author.username}</Typography>
-
-            <Typography variant="subtitle2" sx={{ opacity: 0.5 }}>
-              {data}
-            </Typography>
-          </Stack>
-
-          <HtmlTooltip
-            arrow
-            placement="top"
-            title={
-              <Stack direction="row" spacing={2}>
-                <ArticleUserAvatar
-                  alt="article author avatar"
-                  src={article.author.image}
-                  sx={{
-                    border: (theme) =>
-                      isFollow
-                        ? `3px solid ${theme.palette.secondary.main}`
-                        : null,
-                  }}
-                />
-
-                <Stack spacing={1}>
-                  <Typography>{article.author.username}</Typography>
-                  <Button onClick={() => onFollow(article.author, isFollow)}>
-                    {isFollow ? "Unfollow" : "Follow"}
-                  </Button>
-                </Stack>
-              </Stack>
-            }>
-            <ArticleUserAvatar
-              alt="article author avatar"
-              src={article.author.image}
-              sx={{
-                border: (theme) =>
-                  isFollow ? `3px solid ${theme.palette.secondary.main}` : null,
-              }}
-            />
-          </HtmlTooltip>
+          <ArticleAuthorData
+            author={article.author}
+            isFollow={isFollow}
+            data={article.createdAt}
+          />
         </ArticleUserInner>
       </ArticleUserWrapper>
     </ArticleWrapper>

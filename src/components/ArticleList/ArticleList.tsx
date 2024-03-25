@@ -16,7 +16,6 @@ const ArticleList: FC = () => {
     currentPage,
     maxPage,
     handleChangePage,
-    handleFollowToUser,
   } = useArticleList();
 
   if (isFetching) {
@@ -45,7 +44,6 @@ const ArticleList: FC = () => {
                     followed,
                     article.author.username
                   )}
-                  onFollow={handleFollowToUser}
                 />
               );
             })

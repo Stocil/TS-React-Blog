@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddToFollowerData, User } from "../../types/user.tsx";
+import { FollowingUserData, User } from "../../types/user.tsx";
 import {
   LOCAL_STORAGE_USER_FOLLOWING_KEY,
   LOCAL_STORAGE_USER_KEY,
@@ -7,7 +7,7 @@ import {
 
 type UserState = {
   user: User | Record<string, never>;
-  following: AddToFollowerData[];
+  following: FollowingUserData[];
 };
 
 const initialUser = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
       state.user = {};
     },
 
-    addToFollower: (state, action: PayloadAction<AddToFollowerData>) => {
+    addToFollower: (state, action: PayloadAction<FollowingUserData>) => {
       // if (!state.following.includes(action.payload.username)) {
       //   state.following.push(action.payload);
       //

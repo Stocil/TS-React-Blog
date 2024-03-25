@@ -49,18 +49,13 @@ export type FollowUserQuery = {
   token: string;
 };
 
-export type FollowedUser = {
-  profile: {
-    username: string;
-    bio?: string;
-    image: string;
-    following: boolean;
-  };
-};
-
-export type AddToFollowerData = {
+export type FollowingUserData = {
   username: string;
+  bio?: string;
   image: string;
   following: boolean;
-  bio?: string;
+};
+
+export type FollowingUser = {
+  profile: FollowingUserData;
 };
