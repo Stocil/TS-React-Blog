@@ -1,9 +1,8 @@
 import { Stack, styled } from "@mui/material";
 
 export const ProfileWrapper = styled(Stack)(({ theme }) => ({
-  alignItems: "center",
-  marginTop: theme.spacing(8),
-  paddingTop: theme.spacing(12),
+  paddingTop: theme.spacing(8),
+  paddingBottom: theme.spacing(4),
 }));
 
 export const ProfileInner = styled(Stack)(({ theme }) => ({

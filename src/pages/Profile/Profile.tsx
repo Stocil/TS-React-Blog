@@ -28,6 +28,7 @@ import {
   ProfileInner,
   ProfileWrapper,
 } from "./Profile.styles.tsx";
+import ArticleList from "../../components/ArticleList";
 
 const Profile: FC = () => {
   const {
@@ -44,7 +45,7 @@ const Profile: FC = () => {
     onSubmit,
   } = useProfileForm();
   const { fields } = useRenderProfileForm();
-  const { followingUsers } = useProfile();
+  const { followingUsers, articleOptions } = useProfile();
 
   const renderFields = (fields: UpdateInputFields[]) => {
     return fields.map((field) => {
@@ -104,7 +105,7 @@ const Profile: FC = () => {
 
   return (
     <Container>
-      <ProfileWrapper>
+      <ProfileWrapper spacing={5}>
         <ProfileInner>
           <Stack spacing={3} textAlign="center">
             <GradientText variant="h4">Following authors</GradientText>
@@ -127,7 +128,7 @@ const Profile: FC = () => {
           </Stack>
 
           <FormWrapper elevation={8} sx={{ gap: 3, flexGrow: 1 }}>
-            <GradientText variant="h4">Editing a profile</GradientText>
+            <GradientText variant="h4">Profile editing</GradientText>
 
             <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
               {renderFields(fields)}
@@ -155,6 +156,12 @@ const Profile: FC = () => {
             </form>
           </FormWrapper>
         </ProfileInner>
+
+        <Stack spacing={2}>
+          <Typography variant="h4">My articles</Typography>
+
+          <ArticleList articleOptions={articleOptions} />
+        </Stack>
       </ProfileWrapper>
 
       <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen} />

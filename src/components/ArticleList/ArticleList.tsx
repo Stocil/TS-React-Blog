@@ -7,7 +7,14 @@ import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
 import { isUserInFollowers } from "../../utils/isUserInFollowers.ts";
 
-const ArticleList: FC = () => {
+type ArticleListProps = {
+  articleOptions: {
+    author?: string;
+    favorited?: string;
+  } | null;
+};
+
+const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
   const {
     data,
     followed,
@@ -16,7 +23,7 @@ const ArticleList: FC = () => {
     currentPage,
     maxPage,
     handleChangePage,
-  } = useArticleList();
+  } = useArticleList(articleOptions);
 
   if (isFetching) {
     return <Typography>Loading...</Typography>;
