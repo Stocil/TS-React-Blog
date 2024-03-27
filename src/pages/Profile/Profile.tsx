@@ -26,6 +26,7 @@ import { ErrorMessage } from "../../components/UIkit/ErrorMessage/ErrorMessage.t
 import {
   FollowingWrapper,
   ProfileInner,
+  ProfileSwitchButton,
   ProfileWrapper,
 } from "./Profile.styles.tsx";
 import ArticleList from "../../components/ArticleList";
@@ -158,7 +159,13 @@ const Profile: FC = () => {
         </ProfileInner>
 
         <Stack spacing={2}>
-          <Typography variant="h4">My articles</Typography>
+          <Stack direction="row" spacing={2}>
+            <ProfileSwitchButton size="large">My articles</ProfileSwitchButton>
+
+            <ProfileSwitchButton size="large" color="secondary">
+              Favorite articles
+            </ProfileSwitchButton>
+          </Stack>
 
           <ArticleList articleOptions={articleOptions} />
         </Stack>

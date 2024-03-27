@@ -1,4 +1,5 @@
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useState } from "react";
 
 type ArticleOptions = {
   author?: string;
@@ -7,10 +8,20 @@ type ArticleOptions = {
 
 export const useProfile = () => {
   const user = useTypedSelector((state) => state.user.user);
-  const articleOptions: ArticleOptions = {
-    author: user.token ? user.username : "",
-    favorited: "",
-  };
+  const [profileArticles, setProfileArticles] = useState<"user" | "favorited">(
+    "favorited"
+  );
+
+  const articleOptions: ArticleOptions =
+    profileArticles === "user"
+      ? {
+          author: user.token ? user.username : "",
+          favorited: "",
+        }
+      : {
+          author: "",
+          favorited: "modernt",
+        };
 
   const followingUsers = useTypedSelector((state) => state.user.following);
 
