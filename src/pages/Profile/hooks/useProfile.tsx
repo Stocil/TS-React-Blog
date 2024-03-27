@@ -9,7 +9,7 @@ type ArticleOptions = {
 export const useProfile = () => {
   const user = useTypedSelector((state) => state.user.user);
   const [profileArticles, setProfileArticles] = useState<"user" | "favorited">(
-    "favorited"
+    "user"
   );
 
   const articleOptions: ArticleOptions =
@@ -20,13 +20,18 @@ export const useProfile = () => {
         }
       : {
           author: "",
-          favorited: "modernt",
+          favorited: user.token ? user.username : "",
         };
 
   const followingUsers = useTypedSelector((state) => state.user.following);
 
+  function handleChangeProfileArticles(mode: "user" | "favorited") {
+    setProfileArticles(mode);
+  }
+
   return {
     followingUsers,
     articleOptions,
+    handleChangeProfileArticles,
   };
 };

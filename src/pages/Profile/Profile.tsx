@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
+import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
 import FormWrapper from "../../components/UIkit/FormWrapper";
 import GradientText from "../../components/UIkit/GradientText";
@@ -46,7 +47,8 @@ const Profile: FC = () => {
     onSubmit,
   } = useProfileForm();
   const { fields } = useRenderProfileForm();
-  const { followingUsers, articleOptions } = useProfile();
+  const { followingUsers, articleOptions, handleChangeProfileArticles } =
+    useProfile();
 
   const renderFields = (fields: UpdateInputFields[]) => {
     return fields.map((field) => {
@@ -158,11 +160,20 @@ const Profile: FC = () => {
           </FormWrapper>
         </ProfileInner>
 
-        <Stack spacing={2}>
-          <Stack direction="row" spacing={2}>
-            <ProfileSwitchButton size="large">My articles</ProfileSwitchButton>
+        <Stack spacing={3}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <ProfileSwitchButton
+              size="large"
+              onClick={() => handleChangeProfileArticles("user")}>
+              My articles
+            </ProfileSwitchButton>
 
-            <ProfileSwitchButton size="large" color="secondary">
+            <CompareArrowsIcon fontSize="large" />
+
+            <ProfileSwitchButton
+              size="large"
+              color="secondary"
+              onClick={() => handleChangeProfileArticles("favorited")}>
               Favorite articles
             </ProfileSwitchButton>
           </Stack>
