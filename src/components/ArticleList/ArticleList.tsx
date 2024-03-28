@@ -5,7 +5,6 @@ import { Pagination, Stack, Typography } from "@mui/material";
 import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
-import { isUserInFollowers } from "../../utils/isUserInFollowers.ts";
 
 type ArticleListProps = {
   articleOptions: {
@@ -17,12 +16,12 @@ type ArticleListProps = {
 const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
   const {
     data,
-    followed,
     isFetching,
     error,
     currentPage,
     maxPage,
     handleChangePage,
+    handleAddArticleToFavorite,
   } = useArticleList(articleOptions);
 
   if (isFetching) {
@@ -47,10 +46,7 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
                 <Article
                   key={uuidv4()}
                   article={article}
-                  isFollow={isUserInFollowers(
-                    followed,
-                    article.author.username
-                  )}
+                  onArticleFollow={handleAddArticleToFavorite}
                 />
               );
             })

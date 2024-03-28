@@ -23,14 +23,11 @@ export const useProfile = () => {
           favorited: user.token ? user.username : "",
         };
 
-  const followingUsers = useTypedSelector((state) => state.user.following);
-
   function handleChangeProfileArticles(mode: "user" | "favorited") {
     setProfileArticles(mode);
   }
 
   return {
-    followingUsers,
     articleOptions,
     handleChangeProfileArticles,
   };

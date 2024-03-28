@@ -7,7 +7,6 @@ export const HtmlTooltip = styled(
 )(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
     backgroundColor: theme.palette.background.paper,
-    maxWidth: 220,
     padding: theme.spacing(2),
     fontSize: theme.typography.pxToRem(12),
     border: `1px solid ${theme.palette.primary.main}`,

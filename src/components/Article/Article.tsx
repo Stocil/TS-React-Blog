@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Link } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography } from "@mui/material";
 
 import { ArticleTag } from "../UIkit/ArticleTag/ArticleTag.tsx";
 import {
@@ -19,10 +19,10 @@ import { ArticleAuthorData } from "../ArticleAuthorData/ArticleAuthorData.tsx";
 
 type ArticleProps = {
   article: ArticleType;
-  isFollow: boolean;
+  onArticleFollow: (slug: string, isAlreadyFavorited: boolean) => void;
 };
 
-const Article: FC<ArticleProps> = ({ article, isFollow }) => {
+const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
   return (
     <ArticleWrapper elevation={8}>
       <Stack spacing={1}>
@@ -36,8 +36,11 @@ const Article: FC<ArticleProps> = ({ article, isFollow }) => {
             </Typography>
           </Link>
 
-          <Stack direction="row" spacing="4px">
-            {article.favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <Stack direction="row" alignItems="center">
+            <IconButton
+              onClick={() => onArticleFollow(article.slug, article.favorited)}>
+              {article.favorited ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
 
             <Typography>{article.favoritesCount}</Typography>
           </Stack>
@@ -66,7 +69,7 @@ const Article: FC<ArticleProps> = ({ article, isFollow }) => {
         <ArticleUserInner>
           <ArticleAuthorData
             author={article.author}
-            isFollow={isFollow}
+            isFollow={article.author.following}
             data={article.createdAt}
           />
         </ArticleUserInner>

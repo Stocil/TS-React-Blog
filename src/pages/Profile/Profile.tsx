@@ -1,5 +1,6 @@
 import { FC } from "react";
 import {
+  Avatar,
   Button,
   Container,
   FormControl,
@@ -22,10 +23,8 @@ import { UpdateInputFields } from "../../types/form.tsx";
 import { useProfile } from "./hooks/useProfile.tsx";
 import { useProfileForm } from "./hooks/useProfileForm.tsx";
 import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
-import { ArticleAuthorData } from "../../components/ArticleAuthorData/ArticleAuthorData.tsx";
-import { ErrorMessage } from "../../components/UIkit/ErrorMessage/ErrorMessage.tsx";
 import {
-  FollowingWrapper,
+  ProfileArticleControl,
   ProfileInner,
   ProfileSwitchButton,
   ProfileWrapper,
@@ -47,8 +46,7 @@ const Profile: FC = () => {
     onSubmit,
   } = useProfileForm();
   const { fields } = useRenderProfileForm();
-  const { followingUsers, articleOptions, handleChangeProfileArticles } =
-    useProfile();
+  const { articleOptions, handleChangeProfileArticles } = useProfile();
 
   const renderFields = (fields: UpdateInputFields[]) => {
     return fields.map((field) => {
@@ -110,58 +108,48 @@ const Profile: FC = () => {
     <Container>
       <ProfileWrapper spacing={5}>
         <ProfileInner>
-          <Stack spacing={3} textAlign="center">
-            <GradientText variant="h4">Following authors</GradientText>
-
-            <FollowingWrapper>
-              {followingUsers[0] ? (
-                followingUsers.map((user) => {
-                  return (
-                    <ArticleAuthorData
-                      key={user.username}
-                      author={user}
-                      isFollow={true}
-                    />
-                  );
-                })
-              ) : (
-                <ErrorMessage variant="h5">There no authors yet</ErrorMessage>
-              )}
-            </FollowingWrapper>
-          </Stack>
-
-          <FormWrapper elevation={8} sx={{ gap: 3, flexGrow: 1 }}>
+          <FormWrapper
+            elevation={8}
+            sx={{ gap: 3, flexGrow: 1, maxWidth: 700 }}>
             <GradientText variant="h4">Profile editing</GradientText>
 
-            <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
-              {renderFields(fields)}
+            <Stack direction="row" spacing={3}>
+              <Avatar
+                alt="user avatar"
+                src="https://i.pinimg.com/originals/69/3e/90/693e90297add0bf805e284ca669e00cd.jpg"
+                sx={{ width: 250, height: 250, mt: "30px" }}
+              />
 
-              {errors.root ? (
-                <Typography color="error">{errors.root.message}</Typography>
-              ) : null}
+              <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+                {renderFields(fields)}
 
-              {errorText
-                ? errorText.map((error) => {
-                    return (
-                      <Typography key={error} color="error">
-                        {error}
-                      </Typography>
-                    );
-                  })
-                : null}
+                {errors.root ? (
+                  <Typography color="error">{errors.root.message}</Typography>
+                ) : null}
 
-              <Button
-                type="submit"
-                size="large"
-                disabled={!isValid || isSubmitting}>
-                {isSubmitting ? "Loading..." : "Save"}
-              </Button>
-            </form>
+                {errorText
+                  ? errorText.map((error) => {
+                      return (
+                        <Typography key={error} color="error">
+                          {error}
+                        </Typography>
+                      );
+                    })
+                  : null}
+
+                <Button
+                  type="submit"
+                  size="large"
+                  disabled={!isValid || isSubmitting}>
+                  {isSubmitting ? "Loading..." : "Save"}
+                </Button>
+              </form>
+            </Stack>
           </FormWrapper>
         </ProfileInner>
 
         <Stack spacing={3}>
-          <Stack direction="row" spacing={1} alignItems="center">
+          <ProfileArticleControl>
             <ProfileSwitchButton
               size="large"
               onClick={() => handleChangeProfileArticles("user")}>
@@ -176,7 +164,7 @@ const Profile: FC = () => {
               onClick={() => handleChangeProfileArticles("favorited")}>
               Favorite articles
             </ProfileSwitchButton>
-          </Stack>
+          </ProfileArticleControl>
 
           <ArticleList articleOptions={articleOptions} />
         </Stack>

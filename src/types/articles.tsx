@@ -26,3 +26,8 @@ export const ArticlesResponseSchema = z.object({
 });
 
 export type ArticlesResponseType = z.infer<typeof ArticlesResponseSchema>;
+
+export type SingleArticleResponseType = Omit<
+  ArticlesResponseType,
+  "articlesCount"
+>;

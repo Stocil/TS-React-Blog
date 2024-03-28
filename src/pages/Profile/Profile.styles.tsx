@@ -7,20 +7,19 @@ export const ProfileWrapper = styled(Stack)(({ theme }) => ({
 
 export const ProfileInner = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
-  gap: theme.spacing(5),
-}));
-
-export const FollowingWrapper = styled(Stack)(({ theme }) => ({
-  flexDirection: "row",
-  flexWrap: "wrap",
   justifyContent: "center",
-  gap: theme.spacing(2),
-  maxWidth: 700,
-  rowGap: theme.spacing(3),
+  gap: theme.spacing(5),
 }));
 
 export const ProfileSwitchButton = styled(Button)(({ theme }) => ({
   border: `1px solid ${theme.palette.primary.main}`,
   padding: "10px",
   borderRadius: theme.spacing(1),
+}));
+
+export const ProfileArticleControl = styled(Stack)(({ theme }) => ({
+  flexDirection: "row",
+  gap: theme.spacing(1),
+  alignItems: "center",
+  justifyContent: "center",
 }));

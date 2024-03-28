@@ -3,7 +3,12 @@ import { useSearchParams } from "react-router-dom";
 
 import { useActions } from "../../../hooks/useActions.ts";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
-import { useGetArticlesQuery } from "../../../store/api/articlesApi.ts";
+import {
+  useFavoriteAnArticleMutation,
+  useGetArticlesQuery,
+  useUnfavoriteAnArticleMutation,
+} from "../../../store/api/articlesApi.ts";
+import { getToken } from "../../../utils/getToken.ts";
 
 type ArticleListProps = {
   author?: string;
@@ -18,10 +23,10 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   const currentFavorited = searchParams.get("favorited") || "";
 
   const user = useTypedSelector((state) => state.user.user);
-  let followed = useTypedSelector((state) => state.user.following);
-  followed = user.token ? followed : [];
+  const token = getToken(user.token);
 
   const { data, error, isFetching } = useGetArticlesQuery({
+    token: token,
     page: +currentPage,
     author:
       articleOptions?.author || articleOptions?.author === ""
@@ -34,6 +39,9 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   });
   const maxPage = data ? Math.round(data.articlesCount / 5) : +currentPage + 4;
 
+  const [favoriteAnArticle] = useFavoriteAnArticleMutation();
+  const [unfavoriteAnArticle] = useUnfavoriteAnArticleMutation();
+
   useEffect(() => {
     if (data) {
       getArticles(data);
@@ -45,13 +53,24 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
     setSearchParams(searchParams);
   }
 
+  function handleAddArticleToFavorite(
+    slug: string,
+    isAlreadyFavorited: boolean
+  ) {
+    if (isAlreadyFavorited) {
+      unfavoriteAnArticle({ token: token, slug: slug });
+    } else {
+      favoriteAnArticle({ token: token, slug: slug });
+    }
+  }
+
   return {
     data,
-    followed,
     isFetching,
     error,
     currentPage,
     maxPage,
     handleChangePage,
+    handleAddArticleToFavorite,
   };
 };
