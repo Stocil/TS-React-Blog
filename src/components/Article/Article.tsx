@@ -27,7 +27,7 @@ const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
     <ArticleWrapper elevation={8}>
       <Stack spacing={1}>
         <ArticleInfoWrapper>
-          <Link to={article.slug}>
+          <Link to={`/article/${article.slug}`}>
             <Typography
               variant="h5"
               color="primary"

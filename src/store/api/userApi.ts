@@ -1,10 +1,10 @@
 import { api } from "./api.ts";
 import {
   FollowingUser,
-  FollowUserQuery,
   User,
   UserAuthLoginQuery,
   UserAuthRegisterQuery,
+  UserQuery,
   UserUpdateQuery,
 } from "../../types/user.tsx";
 
@@ -44,7 +44,9 @@ const userApi = api.injectEndpoints({
       }),
     }),
 
-    followToUser: builder.mutation<FollowingUser, FollowUserQuery>({
+    //TODO: change Author tag invalidation, add id and e.t.c
+
+    followToUser: builder.mutation<FollowingUser, UserQuery>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}/follow`,
         method: "POST",
@@ -53,10 +55,10 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: ["Article"],
+      invalidatesTags: ["Article", "Author"],
     }),
 
-    unfollowFromUser: builder.mutation<FollowingUser, FollowUserQuery>({
+    unfollowFromUser: builder.mutation<FollowingUser, UserQuery>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}/follow`,
         method: "DELETE",
@@ -65,7 +67,18 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: ["Article"],
+      invalidatesTags: ["Article", "Author"],
+    }),
+
+    getProfile: builder.query<FollowingUser, UserQuery>({
+      query: ({ username, token }) => ({
+        url: `/profiles/${username}`,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: token,
+        },
+      }),
+      providesTags: ["Author"],
     }),
   }),
   overrideExisting: false,
@@ -77,4 +90,5 @@ export const {
   useUpdateUserMutation,
   useFollowToUserMutation,
   useUnfollowFromUserMutation,
+  useGetProfileQuery,
 } = userApi;

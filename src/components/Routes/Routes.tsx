@@ -4,8 +4,14 @@ import Profile from "../../pages/Profile";
 import HomePage from "../../pages/HomePage";
 import AccountManager from "../../pages/AccountManager";
 import Header from "../Header";
-import { PROFILE_URL, SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
+import {
+  AUTHOR_PAGE_URL,
+  PROFILE_URL,
+  SIGN_IN_URL,
+  SIGN_UP_URL,
+} from "../../constants";
 import PrivateRoute from "../PrivateRoute";
+import AuthorPage from "../../pages/AuthorPage";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -24,6 +30,11 @@ const AppRoutes = () => {
               <Profile />
             </PrivateRoute>
           ),
+        },
+
+        {
+          path: AUTHOR_PAGE_URL,
+          element: <AuthorPage />,
         },
 
         {

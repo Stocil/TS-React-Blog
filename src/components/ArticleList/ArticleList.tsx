@@ -7,10 +7,10 @@ import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
 
 type ArticleListProps = {
-  articleOptions: {
+  articleOptions?: {
     author?: string;
     favorited?: string;
-  } | null;
+  };
 };
 
 const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {

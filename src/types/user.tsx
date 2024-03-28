@@ -44,7 +44,7 @@ export type UserUpdateQuery = {
   token: string;
 };
 
-export type FollowUserQuery = {
+export type UserQuery = {
   username: string;
   token: string;
 };
