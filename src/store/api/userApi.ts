@@ -53,6 +53,7 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
+      invalidatesTags: ["Article"],
     }),
 
     unfollowFromUser: builder.mutation<FollowingUser, FollowUserQuery>({
@@ -64,6 +65,7 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
+      invalidatesTags: ["Article"],
     }),
   }),
   overrideExisting: false,

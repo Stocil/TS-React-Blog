@@ -26,6 +26,7 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
+      providesTags: ["Article"],
     }),
 
     favoriteAnArticle: builder.mutation<
@@ -40,6 +41,7 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
+      invalidatesTags: ["Article"],
     }),
 
     unfavoriteAnArticle: builder.mutation<
@@ -54,6 +56,7 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
+      invalidatesTags: ["Article"],
     }),
   }),
 });
