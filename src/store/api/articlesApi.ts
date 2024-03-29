@@ -5,7 +5,7 @@ import {
 } from "../../types/articles.tsx";
 
 type getArticlesProps = {
-  token: string;
+  token?: string;
   page: number;
   author?: string;
   favorited?: string;
@@ -26,7 +26,16 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
-      providesTags: ["Article"],
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.articles.map((article) => ({
+                type: "Article" as const,
+                id: article.author.username,
+              })),
+              "Article",
+            ]
+          : ["Article"],
     }),
 
     favoriteAnArticle: builder.mutation<

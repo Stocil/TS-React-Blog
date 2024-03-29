@@ -31,3 +31,8 @@ export type SingleArticleResponseType = Omit<
   ArticlesResponseType,
   "articlesCount"
 >;
+
+export type ArticleOptions = {
+  author?: string;
+  favorited?: string;
+} | null;

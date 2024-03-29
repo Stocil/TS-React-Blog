@@ -12,7 +12,6 @@ export const ProfileInner = styled(Stack)(({ theme }) => ({
 }));
 
 export const ProfileSwitchButton = styled(Button)(({ theme }) => ({
-  border: `1px solid ${theme.palette.primary.main}`,
   padding: "10px",
   borderRadius: theme.spacing(1),
 }));

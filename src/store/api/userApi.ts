@@ -8,6 +8,11 @@ import {
   UserUpdateQuery,
 } from "../../types/user.tsx";
 
+type getProfileProps = {
+  username: string;
+  token?: string;
+};
+
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     registerUser: builder.mutation<User, UserAuthRegisterQuery>({
@@ -44,8 +49,6 @@ const userApi = api.injectEndpoints({
       }),
     }),
 
-    //TODO: change Author tag invalidation, add id and e.t.c
-
     followToUser: builder.mutation<FollowingUser, UserQuery>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}/follow`,
@@ -55,7 +58,10 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: ["Article", "Author"],
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "Article", id: arg.username },
+        { type: "Author", id: arg.username },
+      ],
     }),
 
     unfollowFromUser: builder.mutation<FollowingUser, UserQuery>({
@@ -67,10 +73,13 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: ["Article", "Author"],
+      invalidatesTags: (_result, _error, arg) => [
+        { type: "Article", id: arg.username },
+        { type: "Author", id: arg.username },
+      ],
     }),
 
-    getProfile: builder.query<FollowingUser, UserQuery>({
+    getProfile: builder.query<FollowingUser, getProfileProps>({
       query: ({ username, token }) => ({
         url: `/profiles/${username}`,
         headers: {
@@ -78,7 +87,9 @@ const userApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
-      providesTags: ["Author"],
+      providesTags: (_result, _error, arg) => [
+        { type: "Author", id: arg.username },
+      ],
     }),
   }),
   overrideExisting: false,

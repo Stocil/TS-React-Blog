@@ -1,12 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   useFollowToUserMutation,
   useGetProfileQuery,
   useUnfollowFromUserMutation,
 } from "../../../store/api/userApi.ts";
+
+import { PROFILE_URL, SIGN_IN_URL } from "../../../constants";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
 import { getToken } from "../../../utils/getToken.ts";
-import { PROFILE_URL, SIGN_IN_URL } from "../../../constants";
 
 export const useAuthorPage = () => {
   const { username } = useParams();
@@ -16,6 +17,7 @@ export const useAuthorPage = () => {
   const [unfollow] = useUnfollowFromUserMutation();
 
   const navigate = useNavigate();
+  const path = useLocation().pathname;
   if (user && user.username === username) {
     navigate(PROFILE_URL, { replace: true });
   }
@@ -33,9 +35,15 @@ export const useAuthorPage = () => {
         follow({ username: data.profile.username, token: token });
       }
     } else {
-      navigate(SIGN_IN_URL, { replace: true });
+      navigate(SIGN_IN_URL, { replace: true, state: { prevPath: path } });
     }
   }
 
-  return { data, isFetching, error, handleFollow };
+  return {
+    username,
+    data,
+    isFetching,
+    error,
+    handleFollow,
+  };
 };

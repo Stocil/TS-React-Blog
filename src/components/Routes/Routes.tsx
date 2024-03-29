@@ -33,7 +33,7 @@ const AppRoutes = () => {
         },
 
         {
-          path: AUTHOR_PAGE_URL,
+          path: `${AUTHOR_PAGE_URL}/:username`,
           element: <AuthorPage />,
         },
 

@@ -41,7 +41,7 @@ export const useProfileForm = () => {
         password: formData.password,
         image: formData.image,
       },
-      token: token,
+      token: token as string,
     };
 
     const response = await updateUser(userInfo)

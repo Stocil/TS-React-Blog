@@ -30,6 +30,7 @@ import {
   ProfileWrapper,
 } from "./Profile.styles.tsx";
 import ArticleList from "../../components/ArticleList";
+import { useArticleOptions } from "../../hooks/useArticleOptions.ts";
 
 const Profile: FC = () => {
   const {
@@ -46,7 +47,10 @@ const Profile: FC = () => {
     onSubmit,
   } = useProfileForm();
   const { fields } = useRenderProfileForm();
-  const { articleOptions, handleChangeProfileArticles } = useProfile();
+  const { user } = useProfile();
+  const { articleOptions, handleChangeArticlesOption } = useArticleOptions(
+    user.username
+  );
 
   const renderFields = (fields: UpdateInputFields[]) => {
     return fields.map((field) => {
@@ -152,7 +156,7 @@ const Profile: FC = () => {
           <ProfileArticleControl>
             <ProfileSwitchButton
               size="large"
-              onClick={() => handleChangeProfileArticles("user")}>
+              onClick={() => handleChangeArticlesOption("user")}>
               My articles
             </ProfileSwitchButton>
 
@@ -161,7 +165,7 @@ const Profile: FC = () => {
             <ProfileSwitchButton
               size="large"
               color="secondary"
-              onClick={() => handleChangeProfileArticles("favorited")}>
+              onClick={() => handleChangeArticlesOption("favorited")}>
               Favorite articles
             </ProfileSwitchButton>
           </ProfileArticleControl>

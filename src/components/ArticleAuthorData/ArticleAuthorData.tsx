@@ -6,6 +6,8 @@ import { FollowingUserData } from "../../types/user.tsx";
 import { HtmlTooltip } from "./ArticleAuthorData.styles.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
 import { useArticleAuthorData } from "./hooks/useArticleAuthorData.tsx";
+import { Link } from "react-router-dom";
+import { AUTHOR_PAGE_URL } from "../../constants";
 
 type ArticleAuthorDataProps = {
   author: FollowingUserData;
@@ -56,14 +58,16 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
             </Stack>
           </Stack>
         }>
-        <ArticleUserAvatar
-          alt="article author avatar"
-          src={author.image}
-          sx={{
-            border: (theme) =>
-              isFollow ? `3px solid ${theme.palette.secondary.main}` : null,
-          }}
-        />
+        <Link to={`${AUTHOR_PAGE_URL}/${author.username}`}>
+          <ArticleUserAvatar
+            alt="article author avatar"
+            src={author.image}
+            sx={{
+              border: (theme) =>
+                isFollow ? `3px solid ${theme.palette.secondary.main}` : null,
+            }}
+          />
+        </Link>
       </HtmlTooltip>
     </Stack>
   );

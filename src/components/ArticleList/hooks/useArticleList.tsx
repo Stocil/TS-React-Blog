@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import { useActions } from "../../../hooks/useActions.ts";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
@@ -9,6 +9,7 @@ import {
   useUnfavoriteAnArticleMutation,
 } from "../../../store/api/articlesApi.ts";
 import { getToken } from "../../../utils/getToken.ts";
+import { SIGN_IN_URL } from "../../../constants";
 
 type ArticleListProps = {
   author?: string;
@@ -16,6 +17,9 @@ type ArticleListProps = {
 } | null;
 
 export const useArticleList = (articleOptions: ArticleListProps) => {
+  const navigate = useNavigate();
+  const path = useLocation().pathname;
+
   const { getArticles } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get("page") || "1";
@@ -39,6 +43,8 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   });
   const maxPage = data ? Math.round(data.articlesCount / 5) : +currentPage + 4;
 
+  console.log(data);
+
   const [favoriteAnArticle] = useFavoriteAnArticleMutation();
   const [unfavoriteAnArticle] = useUnfavoriteAnArticleMutation();
 
@@ -57,10 +63,14 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
     slug: string,
     isAlreadyFavorited: boolean
   ) {
-    if (isAlreadyFavorited) {
-      unfavoriteAnArticle({ token: token, slug: slug });
+    if (token) {
+      if (isAlreadyFavorited) {
+        unfavoriteAnArticle({ token: token, slug: slug });
+      } else {
+        favoriteAnArticle({ token: token, slug: slug });
+      }
     } else {
-      favoriteAnArticle({ token: token, slug: slug });
+      navigate(SIGN_IN_URL, { replace: true, state: { prevPath: path } });
     }
   }
 
