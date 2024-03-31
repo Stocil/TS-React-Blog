@@ -6,12 +6,14 @@ import AccountManager from "../../pages/AccountManager";
 import Header from "../Header";
 import {
   AUTHOR_PAGE_URL,
+  CREATE_ARTICLE_URL,
   PROFILE_URL,
   SIGN_IN_URL,
   SIGN_UP_URL,
 } from "../../constants";
 import PrivateRoute from "../PrivateRoute";
 import AuthorPage from "../../pages/AuthorPage";
+import CreateArticle from "../../pages/CreateArticle";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -45,6 +47,15 @@ const AppRoutes = () => {
         {
           path: SIGN_UP_URL,
           element: <AccountManager />,
+        },
+
+        {
+          path: CREATE_ARTICLE_URL,
+          element: (
+            <PrivateRoute>
+              <CreateArticle />
+            </PrivateRoute>
+          ),
         },
       ],
       // TODO add error component

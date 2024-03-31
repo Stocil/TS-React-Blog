@@ -1,6 +1,7 @@
 export const PROFILE_URL = "/profile";
 export const SIGN_IN_URL = "/sign-in";
 export const SIGN_UP_URL = "/sign-up";
+export const CREATE_ARTICLE_URL = "/create";
 export const AUTHOR_PAGE_URL = "/author";
 
 export const BASE_URL = "https://blog.kata.academy/api";
