@@ -1,0 +1,50 @@
+.create{
+  &__form {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__textarea {
+    width: 100%;
+    border-radius: 10px;
+    background-color: transparent;
+    padding: 16.5px 14px;
+    font: inherit;
+    letter-spacing: inherit;
+    color: currentColor;
+    resize: vertical;
+
+    &:hover {
+      border-color: rgb(255, 255, 255);
+    }
+
+    &:focus-visible {
+      outline: 0;
+      border-color: #9fa8da;
+      border-width: 2px;
+    }
+  }
+
+  &__textarea-label {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    opacity: 0.7;
+
+    transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.focus {
+      opacity: 1;
+      top: 0;
+      transform: translateY(-100%);
+      font-size: 12px;
+      color: #9fa8da;
+    }
+  }
+}
