@@ -43,8 +43,6 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   });
   const maxPage = data ? Math.round(data.articlesCount / 5) : +currentPage + 4;
 
-  console.log(data);
-
   const [favoriteAnArticle] = useFavoriteAnArticleMutation();
   const [unfavoriteAnArticle] = useUnfavoriteAnArticleMutation();
 

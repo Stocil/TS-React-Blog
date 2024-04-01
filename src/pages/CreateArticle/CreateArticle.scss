@@ -2,11 +2,12 @@
   &__form {
     width: 100%;
     padding: 30px;
+
     display: flex;
     flex-direction: column;
     gap: 24px;
     justify-content: center;
-    align-items: center;
+    align-items: start;
   }
 
   &__textarea {
@@ -32,7 +33,7 @@
 
   &__textarea-label {
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 14px;
     transform: translateY(-50%);
     opacity: 0.7;
