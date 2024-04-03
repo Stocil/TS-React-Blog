@@ -11,4 +11,4 @@ export const createArticleFields = [
     label: "Short description",
     type: "text",
   },
-];
+] as const;

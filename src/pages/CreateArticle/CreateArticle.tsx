@@ -7,30 +7,33 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 import FormWrapper from "../../components/UIkit/FormWrapper";
 import GradientText from "../../components/UIkit/GradientText";
-import { useCreateArticle } from "./hooks/useCreateArticle.tsx";
-import { createArticleFields } from "./data/createArticleFields.ts";
 import {
   DeleteTagButton,
   Tag,
   TagControlWrapper,
 } from "./CreateArticle.styled.tsx";
-import CloseIcon from "@mui/icons-material/Close";
+
+import { createArticleFields } from "./data/createArticleFields.ts";
+import { useCreateArticle } from "./hooks/useCreateArticle.tsx";
 
 const CreateArticle = () => {
   const {
-    onTextAreaBlur,
-    onTextAreaFocus,
+    register,
+    isSubmitting,
     tags,
     tagInputRef,
     tagInputHelperText,
     addNewTag,
     deleteTag,
+    onTextAreaBlur,
+    onTextAreaFocus,
+    handleSubmit,
     handleSubmitNewArticle,
   } = useCreateArticle();
-
-  // const { handleSubmitNewArticle } = useSubmitNewArticleForm();
 
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
@@ -41,7 +44,9 @@ const CreateArticle = () => {
             Create new article
           </GradientText>
 
-          <form className="create__form" onSubmit={handleSubmitNewArticle}>
+          <form
+            className="create__form"
+            onSubmit={handleSubmit(handleSubmitNewArticle)}>
             {createArticleFields.map((field) => {
               return (
                 <TextField
@@ -51,6 +56,8 @@ const CreateArticle = () => {
                   variant={"outlined"}
                   autoComplete="off"
                   fullWidth
+                  required
+                  {...register(field.name)}
                 />
               );
             })}
@@ -60,11 +67,15 @@ const CreateArticle = () => {
 
               <TextareaAutosize
                 id="text"
-                name="text"
+                // name="text"
                 style={{ minHeight: 100 }}
                 className="create__textarea"
                 onFocus={onTextAreaFocus}
-                onBlur={onTextAreaBlur}
+                // onBlur={onTextAreaBlur}
+                required
+                {...register("body", {
+                  onBlur: onTextAreaBlur,
+                })}
               />
             </Stack>
 
@@ -105,8 +116,9 @@ const CreateArticle = () => {
               sx={{ alignSelf: "center", px: 3, py: 1 }}
               variant="gradient"
               size="large"
-              type="submit">
-              Submit
+              type="submit"
+              disabled={isSubmitting}>
+              {isSubmitting ? "Loading..." : "Submit"}
             </Button>
           </form>
         </FormWrapper>
