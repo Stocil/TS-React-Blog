@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 
 export const useCreateArticle = () => {
   const tagInputRef = useRef<HTMLInputElement>(null);
@@ -10,9 +10,12 @@ export const useCreateArticle = () => {
     label?.classList.add("focus");
   }
 
-  function onTextAreaBlur() {
+  function onTextAreaBlur(e: React.FocusEvent<HTMLTextAreaElement, Element>) {
     const label = document.body.querySelector(".create__textarea-label");
-    label?.classList.remove("focus");
+
+    if (e.target.value === "") {
+      label?.classList.remove("focus");
+    }
   }
 
   function addNewTag() {
@@ -34,6 +37,11 @@ export const useCreateArticle = () => {
     setTags(newTags);
   }
 
+  function handleSubmitNewArticle(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(e);
+  }
+
   return {
     onTextAreaBlur,
     onTextAreaFocus,
@@ -42,5 +50,6 @@ export const useCreateArticle = () => {
     tagInputHelperText,
     addNewTag,
     deleteTag,
+    handleSubmitNewArticle,
   };
 };

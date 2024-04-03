@@ -27,7 +27,10 @@ const CreateArticle = () => {
     tagInputHelperText,
     addNewTag,
     deleteTag,
+    handleSubmitNewArticle,
   } = useCreateArticle();
+
+  // const { handleSubmitNewArticle } = useSubmitNewArticleForm();
 
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
@@ -38,7 +41,7 @@ const CreateArticle = () => {
             Create new article
           </GradientText>
 
-          <form className="create__form">
+          <form className="create__form" onSubmit={handleSubmitNewArticle}>
             {createArticleFields.map((field) => {
               return (
                 <TextField
