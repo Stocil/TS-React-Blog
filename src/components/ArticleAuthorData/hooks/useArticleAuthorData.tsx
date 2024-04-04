@@ -13,6 +13,7 @@ export const useArticleAuthorData = (data: string | null = null) => {
   const navigate = useNavigate();
   const user = useTypedSelector((state) => state.user.user);
   const token = getToken(user.token);
+  const currentUsername = user.username;
 
   const [follow] = useFollowToUserMutation();
   const [unfollow] = useUnfollowFromUserMutation();
@@ -35,5 +36,5 @@ export const useArticleAuthorData = (data: string | null = null) => {
     }
   }
 
-  return { formattedData, onFollow };
+  return { formattedData, onFollow, currentUsername };
 };

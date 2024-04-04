@@ -21,7 +21,7 @@ type createArticleProps = {
     title: string;
     description: string;
     body: string;
-    tags?: string[];
+    tagList?: string[];
   };
   token: string;
 };
@@ -91,6 +91,7 @@ const articlesApi = api.injectEndpoints({
         },
         body: { article },
       }),
+      invalidatesTags: ["Article"],
     }),
   }),
 });

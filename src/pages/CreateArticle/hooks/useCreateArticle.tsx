@@ -66,7 +66,7 @@ export const useCreateArticle = () => {
       title: formData.title,
       description: formData.description,
       body: formData.body,
-      tags: tags,
+      tagList: tags,
     };
 
     await createArticle({ article: article, token: token })

@@ -20,7 +20,8 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
   isFollow,
   data = null,
 }) => {
-  const { formattedData, onFollow } = useArticleAuthorData(data);
+  const { formattedData, onFollow, currentUsername } =
+    useArticleAuthorData(data);
 
   return (
     <Stack direction="row" spacing={1}>
@@ -51,10 +52,15 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
             />
 
             <Stack spacing={1}>
-              <Typography>{author.username}</Typography>
-              <Button onClick={() => onFollow(author, isFollow)}>
-                {isFollow ? "Unfollow" : "Follow"}
-              </Button>
+              <Typography>
+                {author.username === currentUsername ? "You" : author.username}
+              </Typography>
+
+              {currentUsername !== author.username ? (
+                <Button onClick={() => onFollow(author, isFollow)}>
+                  {isFollow ? "Unfollow" : "Follow"}
+                </Button>
+              ) : null}
             </Stack>
           </Stack>
         }>
