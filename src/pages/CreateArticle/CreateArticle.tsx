@@ -67,11 +67,9 @@ const CreateArticle = () => {
 
               <TextareaAutosize
                 id="text"
-                // name="text"
                 style={{ minHeight: 100 }}
                 className="create__textarea"
                 onFocus={onTextAreaFocus}
-                // onBlur={onTextAreaBlur}
                 required
                 {...register("body", {
                   onBlur: onTextAreaBlur,
