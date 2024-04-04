@@ -8,6 +8,7 @@ import {
 import { PROFILE_URL, SIGN_IN_URL } from "../../../constants";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
 import { getToken } from "../../../utils/getToken.ts";
+import { useEffect } from "react";
 
 export const useAuthorPage = () => {
   const { username } = useParams();
@@ -18,9 +19,12 @@ export const useAuthorPage = () => {
 
   const navigate = useNavigate();
   const path = useLocation().pathname;
-  if (user && user.username === username) {
-    navigate(PROFILE_URL, { replace: true });
-  }
+
+  useEffect(() => {
+    if (user && user.username === username) {
+      navigate(PROFILE_URL, { replace: true });
+    }
+  }, [navigate, username, user]);
 
   const { data, isFetching, error } = useGetProfileQuery({
     token: token,

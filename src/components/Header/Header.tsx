@@ -15,11 +15,16 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import GradientText from "../UIkit/GradientText";
 import HeaderWrapper from "./Header.styles.tsx";
 import { useHeader } from "./hooks/useHeader.tsx";
-import { DEF_AVATAR, PROFILE_URL, SIGN_IN_URL } from "../../constants";
+import {
+  CREATE_ARTICLE_URL,
+  DEF_AVATAR,
+  PROFILE_URL,
+  SIGN_IN_URL,
+} from "../../constants";
 import { Link, Outlet } from "react-router-dom";
 
 const Header: FC = () => {
-  const { path, userData, isLogged, handleLogOut } = useHeader();
+  const { path, userData, isLogged, handleLogOut, navigate } = useHeader();
 
   return (
     <>
@@ -33,7 +38,11 @@ const Header: FC = () => {
 
               {isLogged ? (
                 <Stack direction="row" spacing={2}>
-                  <Button size="small" variant="outlined" color="success">
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    color="success"
+                    onClick={() => navigate(CREATE_ARTICLE_URL)}>
                     Create article
                   </Button>
 

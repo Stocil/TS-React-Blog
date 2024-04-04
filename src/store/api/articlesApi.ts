@@ -16,6 +16,16 @@ type favoriteAnArticleProps = {
   token: string;
 };
 
+type createArticleProps = {
+  article: {
+    title: string;
+    description: string;
+    body: string;
+    tagList?: string[];
+  };
+  token: string;
+};
+
 const articlesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getArticles: builder.query<ArticlesResponseType, getArticlesProps>({
@@ -67,6 +77,22 @@ const articlesApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Article"],
     }),
+
+    createArticle: builder.mutation<
+      SingleArticleResponseType,
+      createArticleProps
+    >({
+      query: ({ article, token }) => ({
+        url: "/articles",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: token,
+        },
+        body: { article },
+      }),
+      invalidatesTags: ["Article"],
+    }),
   }),
 });
 
@@ -74,4 +100,5 @@ export const {
   useGetArticlesQuery,
   useFavoriteAnArticleMutation,
   useUnfavoriteAnArticleMutation,
+  useCreateArticleMutation,
 } = articlesApi;
