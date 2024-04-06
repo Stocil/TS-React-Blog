@@ -10,10 +10,12 @@ import {
   PROFILE_URL,
   SIGN_IN_URL,
   SIGN_UP_URL,
+  SINGLE_ARTICLE_URL,
 } from "../../constants";
 import PrivateRoute from "../PrivateRoute";
 import AuthorPage from "../../pages/AuthorPage";
 import CreateArticle from "../../pages/CreateArticle";
+import SingleArticle from "../../pages/SingleArticle";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -37,6 +39,11 @@ const AppRoutes = () => {
         {
           path: `${AUTHOR_PAGE_URL}/:username`,
           element: <AuthorPage />,
+        },
+
+        {
+          path: `${SINGLE_ARTICLE_URL}/:slug`,
+          element: <SingleArticle />,
         },
 
         {

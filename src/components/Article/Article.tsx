@@ -4,6 +4,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { IconButton, Stack, Typography } from "@mui/material";
 
+import { SINGLE_ARTICLE_URL } from "../../constants";
 import { ArticleTag } from "../UIkit/ArticleTag/ArticleTag.tsx";
 import {
   ArticleDescription,
@@ -27,7 +28,7 @@ const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
     <ArticleWrapper elevation={8}>
       <Stack spacing={1}>
         <ArticleInfoWrapper>
-          <Link to={`/article/${article.slug}`}>
+          <Link to={`${SINGLE_ARTICLE_URL}/${article.slug}`}>
             <Typography
               variant="h5"
               color="primary"

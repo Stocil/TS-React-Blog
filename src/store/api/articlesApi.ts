@@ -11,6 +11,11 @@ type getArticlesProps = {
   favorited?: string;
 };
 
+type getSingleArticleProps = {
+  token?: string;
+  slug: string;
+};
+
 type favoriteAnArticleProps = {
   slug: string;
   token: string;
@@ -46,6 +51,19 @@ const articlesApi = api.injectEndpoints({
               "Article",
             ]
           : ["Article"],
+    }),
+
+    getSingleArticle: builder.query<
+      SingleArticleResponseType,
+      getSingleArticleProps
+    >({
+      query: ({ slug, token }) => ({
+        url: `/articles/${slug}`,
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: token,
+        },
+      }),
     }),
 
     favoriteAnArticle: builder.mutation<
@@ -98,6 +116,7 @@ const articlesApi = api.injectEndpoints({
 
 export const {
   useGetArticlesQuery,
+  useGetSingleArticleQuery,
   useFavoriteAnArticleMutation,
   useUnfavoriteAnArticleMutation,
   useCreateArticleMutation,
