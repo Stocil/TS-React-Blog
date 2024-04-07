@@ -5,11 +5,14 @@ import {
   ArticleTagsWrapper,
   ArticleWrapper,
   FourOFour,
+  SingleArticleDescription,
   SingleArticleErrorButton,
 } from "./SingleArticle.styles.tsx";
 import { ArticleTag } from "../../components/UIkit/ArticleTag/ArticleTag.tsx";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const SingleArticle = () => {
   const { isFetching, error, data, handleFollow } = useSingleArticle();
@@ -69,12 +72,16 @@ const SingleArticle = () => {
               })}
             </ArticleTagsWrapper>
 
-            <Typography variant="subtitle2" mt={2} sx={{ opacity: 0.7 }}>
+            <SingleArticleDescription variant="subtitle2">
               {data.article.description}
-            </Typography>
+            </SingleArticleDescription>
           </Stack>
 
-          <Typography>{data.article.body}</Typography>
+          <Markdown
+            remarkPlugins={[remarkGfm]}
+            className="single-article__body">
+            {data.article.body}
+          </Markdown>
         </ArticleWrapper>
       ) : null}
     </Container>

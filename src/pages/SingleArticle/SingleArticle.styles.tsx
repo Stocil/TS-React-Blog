@@ -23,3 +23,8 @@ export const ArticleTagsWrapper = styled(Stack)(({ theme }) => ({
   gap: theme.spacing(1),
   marginTop: theme.spacing(1),
 }));
+
+export const SingleArticleDescription = styled(Typography)(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  opacity: 0.6,
+}));
