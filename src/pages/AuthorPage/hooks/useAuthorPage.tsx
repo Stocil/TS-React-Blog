@@ -6,7 +6,7 @@ import {
 } from "../../../store/api/userApi.ts";
 
 import { PROFILE_URL, SIGN_IN_URL } from "../../../constants";
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
 import { useEffect } from "react";
 

@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useGetSingleArticleQuery } from "../../../store/api/articlesApi.ts";
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
+import { useToggleArticleFollow } from "../../../hooks/useToggleArticleFollow.tsx";
+import { useGetSingleArticleQuery } from "../../../store/api/articlesApi.ts";
 
 export const useSingleArticle = () => {
+  const { handleFollow } = useToggleArticleFollow();
   const { slug } = useParams();
   const user = useTypedSelector((state) => state.user.user);
   const token = getToken(user.token);
@@ -13,7 +16,5 @@ export const useSingleArticle = () => {
     token: token,
   });
 
-  console.log(data, error, isFetching);
-
-  return { data, error, isFetching };
+  return { data, error, isFetching, handleFollow };
 };

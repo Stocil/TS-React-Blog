@@ -30,7 +30,7 @@ import {
   ProfileWrapper,
 } from "./Profile.styles.tsx";
 import ArticleList from "../../components/ArticleList";
-import { useArticleOptions } from "../../hooks/useArticleOptions.ts";
+import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 
 const Profile: FC = () => {
   const {

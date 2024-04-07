@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { useCreateArticleMutation } from "../../../store/api/articlesApi.ts";
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
 
 type CreateArticleFormInputs = {

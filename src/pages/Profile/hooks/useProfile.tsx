@@ -1,4 +1,4 @@
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 
 export const useProfile = () => {
   const user = useTypedSelector((state) => state.user.user);

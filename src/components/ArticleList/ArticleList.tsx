@@ -21,7 +21,7 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
     currentPage,
     maxPage,
     handleChangePage,
-    handleAddArticleToFavorite,
+    handleFollow,
   } = useArticleList(articleOptions);
 
   if (isFetching) {
@@ -46,7 +46,7 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
                 <Article
                   key={uuidv4()}
                   article={article}
-                  onArticleFollow={handleAddArticleToFavorite}
+                  onArticleFollow={handleFollow}
                 />
               );
             })

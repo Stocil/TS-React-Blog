@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
 import {
   useFollowToUserMutation,

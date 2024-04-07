@@ -77,7 +77,7 @@ const CreateArticle = () => {
               />
             </Stack>
 
-            <Stack spacing={1} direction="row">
+            <Stack spacing={2} direction="row" flexWrap="wrap" rowGap={1}>
               {tags.map((tag) => {
                 return (
                   <Stack key={tag} direction="row" spacing={1}>

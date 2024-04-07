@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FormInputs, inputSchema } from "../../../types/form.tsx";
 import { userResponseSchema } from "../../../types/user.tsx";
-import { useActions } from "../../../hooks/useActions.ts";
+import { useActions } from "../../../hooks/useActions.tsx";
 import {
   LOCAL_STORAGE_USER_KEY,
   SIGN_IN_URL,
   SIGN_UP_URL,
 } from "../../../constants";
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getErrorMessage } from "../../../utils/getErrorMessage.ts";
 import {
   useLoginUserMutation,

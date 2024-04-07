@@ -8,7 +8,7 @@ import {
   AuthorSwitchButton,
 } from "./AuthorPage.styles.tsx";
 import ArticleList from "../../components/ArticleList";
-import { useArticleOptions } from "../../hooks/useArticleOptions.ts";
+import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
 const AuthorPage: FC = () => {

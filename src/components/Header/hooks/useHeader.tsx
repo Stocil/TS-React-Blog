@@ -1,5 +1,5 @@
-import { useTypedSelector } from "../../../hooks/useTypedSelector.ts";
-import { useActions } from "../../../hooks/useActions.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
+import { useActions } from "../../../hooks/useActions.tsx";
 import { LOCAL_STORAGE_USER_KEY } from "../../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
 

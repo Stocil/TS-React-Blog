@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { useTypedSelector } from "../../hooks/useTypedSelector.ts";
+import { useTypedSelector } from "../../hooks/useTypedSelector.tsx";
 import { Navigate, useLocation } from "react-router-dom";
 import { SIGN_IN_URL } from "../../constants";
 
