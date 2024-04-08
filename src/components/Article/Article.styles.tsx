@@ -36,4 +36,5 @@ export const ArticleUserAvatar = styled(Avatar)({
 export const ArticleDescription = styled(Typography)({
   maxWidth: "calc(100% - 45px)",
   minWidth: 200,
+  wordBreak: "break-all",
 });

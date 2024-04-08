@@ -35,7 +35,7 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
         ? articleOptions.favorited
         : currentFavorited,
   });
-  const maxPage = data ? Math.round(data.articlesCount / 5) : +currentPage + 4;
+  const maxPage = data ? Math.ceil(data.articlesCount / 5) : +currentPage + 4;
 
   useEffect(() => {
     if (data) {

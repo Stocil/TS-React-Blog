@@ -16,21 +16,22 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
+import { DEF_AVATAR } from "../../constants";
 import FormWrapper from "../../components/UIkit/FormWrapper";
 import GradientText from "../../components/UIkit/GradientText";
+import ArticleList from "../../components/ArticleList";
 import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
 import { UpdateInputFields } from "../../types/form.tsx";
 import { useProfile } from "./hooks/useProfile.tsx";
 import { useProfileForm } from "./hooks/useProfileForm.tsx";
 import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
+import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import {
   ProfileArticleControl,
   ProfileInner,
   ProfileSwitchButton,
   ProfileWrapper,
 } from "./Profile.styles.tsx";
-import ArticleList from "../../components/ArticleList";
-import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 
 const Profile: FC = () => {
   const {
@@ -120,7 +121,7 @@ const Profile: FC = () => {
             <Stack direction="row" spacing={3}>
               <Avatar
                 alt="user avatar"
-                src="https://i.pinimg.com/originals/69/3e/90/693e90297add0bf805e284ca669e00cd.jpg"
+                src={user?.image ? user?.image : DEF_AVATAR}
                 sx={{ width: 250, height: 250, mt: "30px" }}
               />
 
