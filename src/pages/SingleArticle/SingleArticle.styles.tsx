@@ -10,6 +10,14 @@ export const SingleArticleErrorButton = styled(Button)(({ theme }) => ({
   fontSize: "1.1rem",
 }));
 
+export const SingleArticleDeleteButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.error.light,
+
+  "&:hover": {
+    backgroundColor: theme.palette.error.main,
+  },
+}));
+
 export const ArticleWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
 
@@ -17,6 +25,12 @@ export const ArticleWrapper = styled(Paper)(({ theme }) => ({
   flexDirection: "column",
   gap: theme.spacing(3),
 }));
+
+export const ArticleInfoWrapper = styled(Stack)({
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "start",
+});
 
 export const ArticleTagsWrapper = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
@@ -27,4 +41,5 @@ export const ArticleTagsWrapper = styled(Stack)(({ theme }) => ({
 export const SingleArticleDescription = styled(Typography)(({ theme }) => ({
   marginTop: theme.spacing(2),
   opacity: 0.6,
+  wordBreak: "break-all",
 }));

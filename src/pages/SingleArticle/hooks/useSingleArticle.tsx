@@ -1,13 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
 import { useToggleArticleFollow } from "../../../hooks/useToggleArticleFollow.tsx";
-import { useGetSingleArticleQuery } from "../../../store/api/articlesApi.ts";
+import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
+import {
+  useDeleteArticleMutation,
+  useGetSingleArticleQuery,
+} from "../../../store/api/articlesApi.ts";
 
 export const useSingleArticle = () => {
+  const navigate = useNavigate();
   const { handleFollow } = useToggleArticleFollow();
+  const [deleteArticle] = useDeleteArticleMutation();
   const { slug } = useParams();
+
   const user = useTypedSelector((state) => state.user.user);
   const token = getToken(user.token);
 
@@ -16,5 +22,21 @@ export const useSingleArticle = () => {
     token: token,
   });
 
-  return { data, error, isFetching, handleFollow };
+  const isAuthor = user.username === data?.article.author.username;
+
+  function handleDeleteArticle() {
+    const currentSlug = data?.article.slug as string;
+    deleteArticle({ slug: currentSlug, token: token as string });
+
+    navigate(-1);
+  }
+
+  return {
+    data,
+    error,
+    isFetching,
+    isAuthor,
+    handleFollow,
+    handleDeleteArticle,
+  };
 };

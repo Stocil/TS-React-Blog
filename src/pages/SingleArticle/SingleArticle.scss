@@ -1,5 +1,6 @@
 .single-article {
   &__body {
     opacity: 0.9;
+    word-break: break-all;
   }
 }

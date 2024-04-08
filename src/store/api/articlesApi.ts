@@ -31,6 +31,11 @@ type createArticleProps = {
   token: string;
 };
 
+type deleteArticleProps = {
+  slug: string;
+  token: string;
+};
+
 const articlesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getArticles: builder.query<ArticlesResponseType, getArticlesProps>({
@@ -113,6 +118,18 @@ const articlesApi = api.injectEndpoints({
       }),
       invalidatesTags: ["Article"],
     }),
+
+    deleteArticle: builder.mutation<void, deleteArticleProps>({
+      query: ({ slug, token }) => ({
+        url: `/articles/${slug}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: token,
+        },
+      }),
+      invalidatesTags: ["Article", "SingleArticle"],
+    }),
   }),
 });
 
@@ -122,4 +139,5 @@ export const {
   useFavoriteAnArticleMutation,
   useUnfavoriteAnArticleMutation,
   useCreateArticleMutation,
+  useDeleteArticleMutation,
 } = articlesApi;
