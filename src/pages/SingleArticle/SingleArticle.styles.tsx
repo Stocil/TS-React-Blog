@@ -1,10 +1,5 @@
 import { Button, Paper, Stack, styled, Typography } from "@mui/material";
 
-export const FourOFour = styled(Typography)(({ theme }) => ({
-  color: theme.palette.primary.main,
-  fontSize: "15rem",
-}));
-
 export const SingleArticleErrorButton = styled(Button)(({ theme }) => ({
   padding: theme.spacing(2, 3),
   fontSize: "1.1rem",

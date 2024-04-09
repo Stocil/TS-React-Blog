@@ -64,6 +64,15 @@ const AppRoutes = () => {
             </PrivateRoute>
           ),
         },
+
+        {
+          path: `${SINGLE_ARTICLE_URL}/:slug/edit`,
+          element: (
+            <PrivateRoute>
+              <CreateArticle />
+            </PrivateRoute>
+          ),
+        },
       ],
       // TODO add error component
       errorElement: <div>Error</div>,

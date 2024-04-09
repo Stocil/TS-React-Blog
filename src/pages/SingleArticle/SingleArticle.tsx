@@ -1,14 +1,12 @@
+import { FC } from "react";
 import { Container, IconButton, Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 import {
   ArticleInfoWrapper,
   ArticleTagsWrapper,
   ArticleWrapper,
-  FourOFour,
   SingleArticleDeleteButton,
   SingleArticleDescription,
-  SingleArticleErrorButton,
 } from "./SingleArticle.styles.tsx";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -18,8 +16,9 @@ import remarkGfm from "remark-gfm";
 import { ArticleTag } from "../../components/UIkit/ArticleTag/ArticleTag.tsx";
 import { useSingleArticle } from "./hooks/useSingleArticle.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
+import ErrorPage from "../ErrorPage";
 
-const SingleArticle = () => {
+const SingleArticle: FC = () => {
   const {
     isFetching,
     isAuthor,
@@ -30,23 +29,7 @@ const SingleArticle = () => {
   } = useSingleArticle();
 
   if (error) {
-    return (
-      <Container sx={{ mt: 8, mb: 4 }}>
-        <Stack textAlign="center" spacing={2}>
-          <FourOFour variant="h2">404</FourOFour>
-
-          <Typography variant="h3" color="primary">
-            Article not found
-          </Typography>
-
-          <Link to="/">
-            <SingleArticleErrorButton size="large" variant="gradient">
-              Home
-            </SingleArticleErrorButton>
-          </Link>
-        </Stack>
-      </Container>
-    );
+    return <ErrorPage>Article not found</ErrorPage>;
   }
 
   return (

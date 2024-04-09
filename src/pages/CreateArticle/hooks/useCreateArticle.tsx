@@ -1,8 +1,12 @@
 import React, { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { useCreateArticleMutation } from "../../../store/api/articlesApi.ts";
+import {
+  useCreateArticleMutation,
+  useGetSingleArticleQuery,
+  useUpdateArticleMutation,
+} from "../../../store/api/articlesApi.ts";
 import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { getToken } from "../../../utils/getToken.ts";
 
@@ -21,6 +25,19 @@ export const useCreateArticle = () => {
   const [createArticle] = useCreateArticleMutation();
   const user = useTypedSelector((state) => state.user.user);
   const token = getToken(user.token) as string;
+
+  // TODO: create new useEditArticle
+  const { slug } = useParams();
+  const {
+    data: articleData,
+    error: getArticleError,
+    isFetching: isArticleLoading,
+  } = useGetSingleArticleQuery({
+    slug: slug as string,
+    token: token,
+  });
+  const isAuthor = user?.username === articleData?.article.author.username;
+  const [updateArticle] = useUpdateArticleMutation();
 
   function onTextAreaFocus() {
     const label = document.body.querySelector(".create__textarea-label");
@@ -57,7 +74,9 @@ export const useCreateArticle = () => {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<CreateArticleFormInputs>({ mode: "onBlur" });
+  } = useForm<CreateArticleFormInputs>({
+    mode: "onBlur",
+  });
 
   const handleSubmitNewArticle: SubmitHandler<CreateArticleFormInputs> = async (
     formData
@@ -68,6 +87,24 @@ export const useCreateArticle = () => {
       body: formData.body,
       tagList: tags,
     };
+
+    // Fix
+    if (isAuthor && slug) {
+      console.log(slug, article);
+      await updateArticle({
+        article: article,
+        slug: slug,
+        token: token,
+      })
+        .then((res) => {
+          if (res) navigate("/", { replace: true });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+
+      return;
+    }
 
     await createArticle({ article: article, token: token })
       .then((res) => {
@@ -90,5 +127,11 @@ export const useCreateArticle = () => {
     onTextAreaFocus,
     handleSubmit,
     handleSubmitNewArticle,
+
+    articleData,
+    slug,
+    isAuthor,
+    getArticleError,
+    isArticleLoading,
   };
 };

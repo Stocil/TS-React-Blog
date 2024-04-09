@@ -19,6 +19,7 @@ import {
 
 import { createArticleFields } from "./data/createArticleFields.ts";
 import { useCreateArticle } from "./hooks/useCreateArticle.tsx";
+import ErrorPage from "../ErrorPage";
 
 const CreateArticle = () => {
   const {
@@ -33,7 +34,25 @@ const CreateArticle = () => {
     onTextAreaFocus,
     handleSubmit,
     handleSubmitNewArticle,
+
+    articleData,
+    slug,
+    isAuthor,
+    getArticleError,
+    isArticleLoading,
   } = useCreateArticle();
+
+  if (slug && (isArticleLoading || getArticleError)) {
+    if (isArticleLoading) {
+      return <Typography>Loading...</Typography>;
+    }
+
+    return <ErrorPage>Article not found</ErrorPage>;
+  }
+
+  if (slug && !isArticleLoading && !isAuthor) {
+    return <ErrorPage error="403">Forbidden</ErrorPage>;
+  }
 
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
@@ -58,6 +77,7 @@ const CreateArticle = () => {
                   fullWidth
                   required
                   {...register(field.name)}
+                  defaultValue={articleData?.article[field.name]}
                 />
               );
             })}
@@ -69,11 +89,13 @@ const CreateArticle = () => {
                 id="text"
                 style={{ minHeight: 100 }}
                 className="create__textarea"
+                autoFocus={true}
                 onFocus={onTextAreaFocus}
                 required
                 {...register("body", {
                   onBlur: onTextAreaBlur,
                 })}
+                defaultValue={articleData?.article.body}
               />
             </Stack>
 
