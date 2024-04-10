@@ -16,6 +16,7 @@ import PrivateRoute from "../PrivateRoute";
 import AuthorPage from "../../pages/AuthorPage";
 import CreateArticle from "../../pages/CreateArticle";
 import SingleArticle from "../../pages/SingleArticle";
+import ErrorPage from "../../pages/ErrorPage";
 
 const AppRoutes = () => {
   const router = createBrowserRouter([
@@ -74,8 +75,8 @@ const AppRoutes = () => {
           ),
         },
       ],
-      // TODO add error component
-      errorElement: <div>Error</div>,
+
+      errorElement: <ErrorPage>Page not found</ErrorPage>,
     },
   ]);
 

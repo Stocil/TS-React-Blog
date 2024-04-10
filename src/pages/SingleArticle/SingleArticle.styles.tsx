@@ -1,10 +1,5 @@
 import { Button, Paper, Stack, styled, Typography } from "@mui/material";
 
-export const SingleArticleErrorButton = styled(Button)(({ theme }) => ({
-  padding: theme.spacing(2, 3),
-  fontSize: "1.1rem",
-}));
-
 export const SingleArticleDeleteButton = styled(Button)(({ theme }) => ({
   backgroundColor: theme.palette.error.light,
 

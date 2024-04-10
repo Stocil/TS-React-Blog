@@ -2,8 +2,7 @@ import { FC, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Container, Stack, Typography } from "@mui/material";
 
-import { SingleArticleErrorButton } from "../SingleArticle/SingleArticle.styles.tsx";
-import { FourOFour } from "./ErrorPage.styles.tsx";
+import { FourOFour, SingleArticleErrorButton } from "./ErrorPage.styles.tsx";
 
 type ErrorPageProps = {
   children: ReactNode;

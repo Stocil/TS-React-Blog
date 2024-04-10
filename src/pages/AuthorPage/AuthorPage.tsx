@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Button, Container, Stack, Typography } from "@mui/material";
 import { useAuthorPage } from "./hooks/useAuthorPage.tsx";
-import { ErrorMessage } from "../../components/UIkit/ErrorMessage/ErrorMessage.tsx";
 import {
   AuthorArticlesControl,
   AuthorAvatar,
@@ -10,6 +9,7 @@ import {
 import ArticleList from "../../components/ArticleList";
 import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import ErrorPage from "../ErrorPage";
 
 const AuthorPage: FC = () => {
   const { username, data, isFetching, error, handleFollow } = useAuthorPage();
@@ -20,9 +20,7 @@ const AuthorPage: FC = () => {
   if (error) {
     return (
       <Container sx={{ mt: 8, mb: 4 }}>
-        <ErrorMessage variant="h5" margin="0 auto" maxWidth={725}>
-          Perhaps such a user does not exist, try to reload the page
-        </ErrorMessage>
+        <ErrorPage>User not found</ErrorPage>
       </Container>
     );
   }
@@ -47,11 +45,13 @@ const AuthorPage: FC = () => {
                   }}
                 />
 
-                <Stack spacing={2}>
+                <Stack spacing={2} alignItems="center">
                   <Typography component="h3" variant="h4" textAlign="center">
                     {data.profile.username}
                   </Typography>
+
                   <Button
+                    sx={{ maxWidth: 100 }}
                     size="large"
                     onClick={() => handleFollow(data.profile.following)}>
                     {data.profile.following ? "Unfollow" : "Follow"}
