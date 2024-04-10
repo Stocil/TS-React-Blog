@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -17,17 +17,18 @@ type CreateArticleFormInputs = {
 };
 
 export const useCreateArticle = () => {
+  const { slug } = useParams();
   const navigate = useNavigate();
+
   const tagInputRef = useRef<HTMLInputElement>(null);
   const [tagInputHelperText, setTagInputHelperText] = useState("");
   const [tags, setTags] = useState<string[]>([]);
 
+  const [updateArticle] = useUpdateArticleMutation();
   const [createArticle] = useCreateArticleMutation();
   const user = useTypedSelector((state) => state.user.user);
   const token = getToken(user.token) as string;
 
-  // TODO: create new useEditArticle
-  const { slug } = useParams();
   const {
     data: articleData,
     error: getArticleError,
@@ -37,7 +38,12 @@ export const useCreateArticle = () => {
     token: token,
   });
   const isAuthor = user?.username === articleData?.article.author.username;
-  const [updateArticle] = useUpdateArticleMutation();
+
+  useEffect(() => {
+    if (articleData?.article.tagList) {
+      setTags(articleData?.article.tagList);
+    }
+  }, [articleData]);
 
   function onTextAreaFocus() {
     const label = document.body.querySelector(".create__textarea-label");
@@ -88,16 +94,14 @@ export const useCreateArticle = () => {
       tagList: tags,
     };
 
-    // Fix
     if (isAuthor && slug) {
-      console.log(slug, article);
       await updateArticle({
         article: article,
         slug: slug,
         token: token,
       })
         .then((res) => {
-          if (res) navigate("/", { replace: true });
+          if (res) navigate(`/article/${slug}`, { replace: true });
         })
         .catch((e) => {
           console.log(e);

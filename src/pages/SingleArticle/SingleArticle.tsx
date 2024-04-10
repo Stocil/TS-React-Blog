@@ -7,6 +7,7 @@ import {
   ArticleWrapper,
   SingleArticleDeleteButton,
   SingleArticleDescription,
+  SingleArticleEditButton,
 } from "./SingleArticle.styles.tsx";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -17,6 +18,8 @@ import { ArticleTag } from "../../components/UIkit/ArticleTag/ArticleTag.tsx";
 import { useSingleArticle } from "./hooks/useSingleArticle.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
 import ErrorPage from "../ErrorPage";
+import { Link } from "react-router-dom";
+import { SINGLE_ARTICLE_URL } from "../../constants";
 
 const SingleArticle: FC = () => {
   const {
@@ -80,9 +83,15 @@ const SingleArticle: FC = () => {
             </Stack>
 
             {isAuthor ? (
-              <SingleArticleDeleteButton onClick={handleDeleteArticle}>
-                Delete
-              </SingleArticleDeleteButton>
+              <Stack direction="row" spacing={1}>
+                <Link to={`${SINGLE_ARTICLE_URL}/${data.article.slug}/edit`}>
+                  <SingleArticleEditButton>Edit</SingleArticleEditButton>
+                </Link>
+
+                <SingleArticleDeleteButton onClick={handleDeleteArticle}>
+                  Delete
+                </SingleArticleDeleteButton>
+              </Stack>
             ) : null}
           </ArticleInfoWrapper>
 

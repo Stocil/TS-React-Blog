@@ -13,6 +13,14 @@ export const SingleArticleDeleteButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+export const SingleArticleEditButton = styled(Button)(({ theme }) => ({
+  backgroundColor: theme.palette.success.light,
+
+  "&:hover": {
+    backgroundColor: theme.palette.success.main,
+  },
+}));
+
 export const ArticleWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
 
@@ -31,6 +39,7 @@ export const ArticleTagsWrapper = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
   gap: theme.spacing(1),
   marginTop: theme.spacing(1),
+  flexWrap: "wrap",
 }));
 
 export const SingleArticleDescription = styled(Typography)(({ theme }) => ({

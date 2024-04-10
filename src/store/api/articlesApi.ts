@@ -146,7 +146,7 @@ const articlesApi = api.injectEndpoints({
           "Content-Type": "application/json;charset=utf-8",
           Authorization: token,
         },
-        body: article,
+        body: { article },
       }),
 
       invalidatesTags: ["Article", "SingleArticle"],
