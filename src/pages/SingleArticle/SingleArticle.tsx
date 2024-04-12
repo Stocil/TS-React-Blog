@@ -20,6 +20,7 @@ import { getLimitedString } from "../../utils/getLimitedString.ts";
 import ErrorPage from "../ErrorPage";
 import { Link } from "react-router-dom";
 import { SINGLE_ARTICLE_URL } from "../../constants";
+import Comments from "../../components/Comments";
 
 const SingleArticle: FC = () => {
   const {
@@ -40,67 +41,71 @@ const SingleArticle: FC = () => {
       {isFetching ? (
         <Typography>Loading...</Typography>
       ) : data ? (
-        <ArticleWrapper>
-          <ArticleInfoWrapper>
-            <Stack>
-              <Stack direction="row" alignItems="center">
-                <Typography
-                  color="primary"
-                  variant="h4"
-                  sx={{ wordBreak: "break-all" }}>
-                  {data.article.title}
-                </Typography>
-
+        <>
+          <ArticleWrapper>
+            <ArticleInfoWrapper>
+              <Stack>
                 <Stack direction="row" alignItems="center">
-                  <IconButton
-                    onClick={() =>
-                      handleFollow(data.article.slug, data.article.favorited)
-                    }>
-                    {data.article.favorited ? (
-                      <FavoriteIcon />
-                    ) : (
-                      <FavoriteBorderIcon />
-                    )}
-                  </IconButton>
+                  <Typography
+                    color="primary"
+                    variant="h4"
+                    sx={{ wordBreak: "break-all" }}>
+                    {data.article.title}
+                  </Typography>
 
-                  <Typography>{data.article.favoritesCount}</Typography>
+                  <Stack direction="row" alignItems="center">
+                    <IconButton
+                      onClick={() =>
+                        handleFollow(data.article.slug, data.article.favorited)
+                      }>
+                      {data.article.favorited ? (
+                        <FavoriteIcon />
+                      ) : (
+                        <FavoriteBorderIcon />
+                      )}
+                    </IconButton>
+
+                    <Typography>{data.article.favoritesCount}</Typography>
+                  </Stack>
                 </Stack>
+
+                <ArticleTagsWrapper>
+                  {data.article.tagList?.map((tag, index) => {
+                    return (
+                      <ArticleTag key={tag + index}>
+                        {getLimitedString(tag, 10)}
+                      </ArticleTag>
+                    );
+                  })}
+                </ArticleTagsWrapper>
+
+                <SingleArticleDescription variant="subtitle2">
+                  {data.article.description}
+                </SingleArticleDescription>
               </Stack>
 
-              <ArticleTagsWrapper>
-                {data.article.tagList?.map((tag, index) => {
-                  return (
-                    <ArticleTag key={tag + index}>
-                      {getLimitedString(tag, 10)}
-                    </ArticleTag>
-                  );
-                })}
-              </ArticleTagsWrapper>
+              {isAuthor ? (
+                <Stack direction="row" spacing={1}>
+                  <Link to={`${SINGLE_ARTICLE_URL}/${data.article.slug}/edit`}>
+                    <SingleArticleEditButton>Edit</SingleArticleEditButton>
+                  </Link>
 
-              <SingleArticleDescription variant="subtitle2">
-                {data.article.description}
-              </SingleArticleDescription>
-            </Stack>
+                  <SingleArticleDeleteButton onClick={handleDeleteArticle}>
+                    Delete
+                  </SingleArticleDeleteButton>
+                </Stack>
+              ) : null}
+            </ArticleInfoWrapper>
 
-            {isAuthor ? (
-              <Stack direction="row" spacing={1}>
-                <Link to={`${SINGLE_ARTICLE_URL}/${data.article.slug}/edit`}>
-                  <SingleArticleEditButton>Edit</SingleArticleEditButton>
-                </Link>
+            <Markdown
+              remarkPlugins={[remarkGfm]}
+              className="single-article__body">
+              {data.article.body}
+            </Markdown>
+          </ArticleWrapper>
 
-                <SingleArticleDeleteButton onClick={handleDeleteArticle}>
-                  Delete
-                </SingleArticleDeleteButton>
-              </Stack>
-            ) : null}
-          </ArticleInfoWrapper>
-
-          <Markdown
-            remarkPlugins={[remarkGfm]}
-            className="single-article__body">
-            {data.article.body}
-          </Markdown>
-        </ArticleWrapper>
+          <Comments />
+        </>
       ) : null}
     </Container>
   );

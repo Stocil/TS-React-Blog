@@ -35,3 +35,17 @@ export type ArticleOptions = {
   author?: string;
   favorited?: string;
 } | null;
+
+export type CommentsResponseType = {
+  comments: {
+    id: number;
+    createAt: string;
+    updatedAt: string;
+    body: string;
+    author: {
+      username: string;
+      image: string;
+      following: boolean;
+    };
+  }[];
+};
