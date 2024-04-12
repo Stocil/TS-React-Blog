@@ -18,7 +18,13 @@ import {
 import SendIcon from "@mui/icons-material/Send";
 
 const Comments: FC = () => {
-  const { user, commentsData, isFetching } = useComments();
+  const {
+    user,
+    commentsData,
+    isFetching,
+    commentInputRef,
+    handleCreateComment,
+  } = useComments();
 
   if (isFetching) {
     return <Typography>Loading...</Typography>;
@@ -43,11 +49,12 @@ const Comments: FC = () => {
               fullWidth
               InputProps={{
                 endAdornment: (
-                  <IconButton>
+                  <IconButton onClick={handleCreateComment}>
                     <SendIcon color="primary" />
                   </IconButton>
                 ),
               }}
+              inputRef={commentInputRef}
             />
           </InputWrapper>
         ) : null}

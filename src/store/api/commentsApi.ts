@@ -1,9 +1,18 @@
 import { api } from "./api.ts";
-import { CommentsResponseType } from "../../types/articles.tsx";
+import {
+  CommentResponseType,
+  CommentsResponseType,
+} from "../../types/articles.tsx";
 
 type getCommentsType = {
   slug: string;
   token?: string;
+};
+
+type createCommentType = Required<getCommentsType> & {
+  comment: {
+    body: string;
+  };
 };
 
 const commentsApi = api.injectEndpoints({
@@ -16,8 +25,24 @@ const commentsApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
+
+      providesTags: ["Comments"],
+    }),
+
+    createComments: builder.mutation<CommentResponseType, createCommentType>({
+      query: ({ slug, token, comment }) => ({
+        url: `/articles/${slug}/comments`,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: token,
+        },
+        body: { comment },
+      }),
+
+      invalidatesTags: ["Comments"],
     }),
   }),
 });
 
-export const { useGetCommentsQuery } = commentsApi;
+export const { useGetCommentsQuery, useCreateCommentsMutation } = commentsApi;
