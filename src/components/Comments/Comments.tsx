@@ -16,6 +16,8 @@ import {
   SingleCommentWrapper,
 } from "./Comment.styles.tsx";
 import SendIcon from "@mui/icons-material/Send";
+import { Link } from "react-router-dom";
+import { AUTHOR_PAGE_URL } from "../../constants";
 
 const Comments: FC = () => {
   const {
@@ -62,7 +64,9 @@ const Comments: FC = () => {
         {commentsData?.comments.map((comment) => {
           return (
             <SingleCommentWrapper key={comment.id}>
-              <Avatar src={comment.author.image} />
+              <Link to={`${AUTHOR_PAGE_URL}/${comment.author.username}`}>
+                <Avatar src={comment.author.image} />
+              </Link>
 
               <Stack spacing={1}>
                 <SingleCommentUserInfo>

@@ -27,6 +27,7 @@ type ArticleProps = {
 const Article: FC<ArticleProps> = ({ isLoading, article, onArticleFollow }) => {
   if (isLoading) {
     return (
+      // TODO: Refactor loading, create new component
       <ArticleWrapper elevation={8}>
         <Stack spacing={2}>
           <Skeleton

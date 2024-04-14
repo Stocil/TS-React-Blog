@@ -40,8 +40,7 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
             data.articles.map((article) => {
               return (
                 <Article
-                  // isLoading={isFetching}
-                  isLoading={true}
+                  isLoading={isFetching}
                   key={uuidv4()}
                   article={article}
                   onArticleFollow={handleFollow}
