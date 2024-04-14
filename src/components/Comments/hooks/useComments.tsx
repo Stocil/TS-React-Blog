@@ -27,8 +27,6 @@ export const useComments = () => {
 
     if (comment === "") return;
 
-    console.log(comment);
-
     createComment({
       token: token as string,
       slug: slug as string,

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Pagination, Stack, Typography } from "@mui/material";
+import { Pagination, Stack } from "@mui/material";
 
 import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
@@ -24,10 +24,6 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
     handleFollow,
   } = useArticleList(articleOptions);
 
-  if (isFetching) {
-    return <Typography>Loading...</Typography>;
-  }
-
   if (error) {
     return (
       <ErrorMessage variant="h3" margin="0 auto">
@@ -44,6 +40,8 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
             data.articles.map((article) => {
               return (
                 <Article
+                  // isLoading={isFetching}
+                  isLoading={true}
                   key={uuidv4()}
                   article={article}
                   onArticleFollow={handleFollow}
@@ -57,15 +55,17 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
           )
         ) : null}
 
-        <Pagination
-          disabled={isFetching}
-          count={maxPage}
-          page={+currentPage}
-          color="secondary"
-          size="large"
-          onChange={(_, page) => handleChangePage(page)}
-          sx={{ alignSelf: "center" }}
-        />
+        {!isFetching ? (
+          <Pagination
+            disabled={isFetching}
+            count={maxPage}
+            page={+currentPage}
+            color="secondary"
+            size="large"
+            onChange={(_, page) => handleChangePage(page)}
+            sx={{ alignSelf: "center" }}
+          />
+        ) : null}
       </Stack>
     </>
   );
