@@ -5,6 +5,7 @@ import { Pagination, Stack } from "@mui/material";
 import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
+import { LoadingArticle } from "../Loading";
 
 type ArticleListProps = {
   articleOptions?: {
@@ -14,6 +15,8 @@ type ArticleListProps = {
 };
 
 const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
+  const loadingArticles = [1, 2, 3, 4, 5];
+
   const {
     data,
     isFetching,
@@ -32,6 +35,16 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
     );
   }
 
+  if (isFetching) {
+    return (
+      <Stack spacing={3}>
+        {loadingArticles.map((article) => {
+          return <LoadingArticle key={article} />;
+        })}
+      </Stack>
+    );
+  }
+
   return (
     <>
       <Stack spacing={3}>
@@ -40,7 +53,6 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
             data.articles.map((article) => {
               return (
                 <Article
-                  isLoading={isFetching}
                   key={uuidv4()}
                   article={article}
                   onArticleFollow={handleFollow}
