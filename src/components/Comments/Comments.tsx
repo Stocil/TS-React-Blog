@@ -1,5 +1,6 @@
 import { FC } from "react";
-
+import SendIcon from "@mui/icons-material/Send";
+import { Link } from "react-router-dom";
 import {
   Avatar,
   IconButton,
@@ -8,16 +9,15 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useComments } from "./hooks/useComments.tsx";
 import {
   CommentWrapper,
   InputWrapper,
   SingleCommentUserInfo,
   SingleCommentWrapper,
 } from "./Comment.styles.tsx";
-import SendIcon from "@mui/icons-material/Send";
-import { Link } from "react-router-dom";
+import { useComments } from "./hooks/useComments.tsx";
 import { AUTHOR_PAGE_URL } from "../../constants";
+import { LoadingComments } from "../Loading";
 
 const Comments: FC = () => {
   const {
@@ -29,7 +29,7 @@ const Comments: FC = () => {
   } = useComments();
 
   if (isFetching) {
-    return <Typography>Loading...</Typography>;
+    return <LoadingComments />;
   }
 
   return (
