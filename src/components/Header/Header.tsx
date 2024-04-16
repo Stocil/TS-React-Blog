@@ -22,6 +22,7 @@ import {
   SIGN_IN_URL,
 } from "../../constants";
 import { Link, Outlet } from "react-router-dom";
+import ThemeSwitch from "../ThemeSwitch";
 
 const Header: FC = () => {
   const { path, userData, isLogged, handleLogOut, navigate } = useHeader();
@@ -38,13 +39,17 @@ const Header: FC = () => {
 
               {isLogged ? (
                 <Stack direction="row" spacing={2}>
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    color="success"
-                    onClick={() => navigate(CREATE_ARTICLE_URL)}>
-                    Create article
-                  </Button>
+                  <Stack direction="row">
+                    <ThemeSwitch />
+
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      color="success"
+                      onClick={() => navigate(CREATE_ARTICLE_URL)}>
+                      Create article
+                    </Button>
+                  </Stack>
 
                   <Stack direction="row" alignItems="center" spacing={1}>
                     <Typography>{userData.username}</Typography>

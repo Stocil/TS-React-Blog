@@ -6,6 +6,7 @@ import {
   ThemeProvider,
 } from "@mui/material";
 import { indigo } from "@mui/material/colors";
+import { useTypedSelector } from "../hooks/useTypedSelector.tsx";
 
 type ThemeProps = {
   children: React.ReactNode;
@@ -27,10 +28,9 @@ declare module "@mui/material/Button" {
   }
 }
 
-// TODO: add light theme, try to change base color to primary
-const mode: PaletteMode = "dark";
-
 export function Theme({ children }: ThemeProps) {
+  const mode: PaletteMode = useTypedSelector((state) => state.theme.theme);
+
   const theme = createTheme({
     palette: {
       mode,
@@ -45,8 +45,6 @@ export function Theme({ children }: ThemeProps) {
         main: "#191919",
       },
       background: {
-        // default: "#212121",
-        // paper: "#212121",
         // default: "#171717",
         // paper: "#171717",
         default: "#1a1d24",
