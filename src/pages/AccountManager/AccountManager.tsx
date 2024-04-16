@@ -25,6 +25,7 @@ import { Link } from "react-router-dom";
 import { SIGN_IN_URL, SIGN_UP_URL } from "../../constants";
 import { useRenderForm } from "./hooks/useRenderForm.tsx";
 import FormWrapper from "../../components/UIkit/FormWrapper";
+import { LoadingButton } from "../../components/Loading";
 
 const AccountManager: FC = () => {
   const {
@@ -141,12 +142,16 @@ const AccountManager: FC = () => {
                     })
                   : null}
 
-                <Button
-                  type="submit"
-                  size="large"
-                  disabled={!isValid || isSubmitting}>
-                  {isSubmitting ? "Loading..." : buttonText}
-                </Button>
+                {isSubmitting ? (
+                  <LoadingButton />
+                ) : (
+                  <Button
+                    type="submit"
+                    size="large"
+                    disabled={!isValid || isSubmitting}>
+                    {isSubmitting ? "Loading..." : buttonText}
+                  </Button>
+                )}
               </form>
 
               <FormTipWrapper>

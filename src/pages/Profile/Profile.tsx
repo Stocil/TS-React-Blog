@@ -32,6 +32,7 @@ import {
   ProfileSwitchButton,
   ProfileWrapper,
 } from "./Profile.styles.tsx";
+import { LoadingButton } from "../../components/Loading";
 
 const Profile: FC = () => {
   const {
@@ -142,12 +143,16 @@ const Profile: FC = () => {
                     })
                   : null}
 
-                <Button
-                  type="submit"
-                  size="large"
-                  disabled={!isValid || isSubmitting}>
-                  {isSubmitting ? "Loading..." : "Save"}
-                </Button>
+                {isSubmitting ? (
+                  <LoadingButton />
+                ) : (
+                  <Button
+                    type="submit"
+                    size="large"
+                    disabled={!isValid || isSubmitting}>
+                    Save
+                  </Button>
+                )}
               </form>
             </Stack>
           </FormWrapper>

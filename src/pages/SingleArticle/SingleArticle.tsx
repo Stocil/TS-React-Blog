@@ -21,6 +21,7 @@ import ErrorPage from "../ErrorPage";
 import { Link } from "react-router-dom";
 import { SINGLE_ARTICLE_URL } from "../../constants";
 import Comments from "../../components/Comments";
+import { LoadingSingleArticle } from "../../components/Loading";
 
 const SingleArticle: FC = () => {
   const {
@@ -39,7 +40,7 @@ const SingleArticle: FC = () => {
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
       {isFetching ? (
-        <Typography>Loading...</Typography>
+        <LoadingSingleArticle />
       ) : data ? (
         <>
           <ArticleWrapper>

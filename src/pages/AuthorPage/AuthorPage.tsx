@@ -10,6 +10,7 @@ import ArticleList from "../../components/ArticleList";
 import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import ErrorPage from "../ErrorPage";
+import { LoadingAuthorPage } from "../../components/Loading";
 
 const AuthorPage: FC = () => {
   const { username, data, isFetching, error, handleFollow } = useAuthorPage();
@@ -25,59 +26,63 @@ const AuthorPage: FC = () => {
     );
   }
 
+  if (isFetching) {
+    return (
+      <Container sx={{ mt: 8, mb: 4 }}>
+        <LoadingAuthorPage />
+      </Container>
+    );
+  }
+
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
       {data ? (
         <Stack spacing={5}>
-          {isFetching ? (
-            <Typography variant="h3">Loading...</Typography>
-          ) : (
-            <>
-              <Stack spacing={3} alignItems="center">
-                <AuthorAvatar
-                  alt="author avatar"
-                  src={data.profile.image}
-                  sx={{
-                    border: (theme) =>
-                      data.profile.following
-                        ? `5px solid ${theme.palette.secondary.main}`
-                        : null,
-                  }}
-                />
+          <>
+            <Stack spacing={3} alignItems="center">
+              <AuthorAvatar
+                alt="author avatar"
+                src={data.profile.image}
+                sx={{
+                  border: (theme) =>
+                    data.profile.following
+                      ? `5px solid ${theme.palette.secondary.main}`
+                      : null,
+                }}
+              />
 
-                <Stack spacing={2} alignItems="center">
-                  <Typography component="h3" variant="h4" textAlign="center">
-                    {data.profile.username}
-                  </Typography>
+              <Stack spacing={2} alignItems="center">
+                <Typography component="h3" variant="h4" textAlign="center">
+                  {data.profile.username}
+                </Typography>
 
-                  <Button
-                    sx={{ maxWidth: 100 }}
-                    size="large"
-                    onClick={() => handleFollow(data.profile.following)}>
-                    {data.profile.following ? "Unfollow" : "Follow"}
-                  </Button>
-                </Stack>
+                <Button
+                  sx={{ maxWidth: 100 }}
+                  size="large"
+                  onClick={() => handleFollow(data.profile.following)}>
+                  {data.profile.following ? "Unfollow" : "Follow"}
+                </Button>
               </Stack>
+            </Stack>
 
-              <AuthorArticlesControl>
-                <AuthorSwitchButton
-                  sx={{ ml: 9 }}
-                  size="large"
-                  onClick={() => handleChangeArticlesOption("user")}>
-                  Author articles
-                </AuthorSwitchButton>
+            <AuthorArticlesControl>
+              <AuthorSwitchButton
+                sx={{ ml: 9 }}
+                size="large"
+                onClick={() => handleChangeArticlesOption("user")}>
+                Author articles
+              </AuthorSwitchButton>
 
-                <CompareArrowsIcon fontSize="large" />
+              <CompareArrowsIcon fontSize="large" />
 
-                <AuthorSwitchButton
-                  size="large"
-                  color="secondary"
-                  onClick={() => handleChangeArticlesOption("favorited")}>
-                  Author favorited articles
-                </AuthorSwitchButton>
-              </AuthorArticlesControl>
-            </>
-          )}
+              <AuthorSwitchButton
+                size="large"
+                color="secondary"
+                onClick={() => handleChangeArticlesOption("favorited")}>
+                Author favorited articles
+              </AuthorSwitchButton>
+            </AuthorArticlesControl>
+          </>
 
           <ArticleList articleOptions={articleOptions} />
         </Stack>
