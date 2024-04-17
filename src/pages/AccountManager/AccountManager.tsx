@@ -159,7 +159,14 @@ const AccountManager: FC = () => {
                   {tip[0]}
                 </Typography>
 
-                <Typography component="p" variant="subtitle2" color="primary">
+                <Typography
+                  component="p"
+                  variant="subtitle2"
+                  color={(theme) =>
+                    theme.palette.mode === "dark"
+                      ? theme.palette.secondary.main
+                      : theme.palette.primary.dark
+                  }>
                   <Link to={tip[1] === "Sign Up" ? SIGN_UP_URL : SIGN_IN_URL}>
                     {tip[1]}
                   </Link>

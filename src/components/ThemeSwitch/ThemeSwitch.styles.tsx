@@ -20,12 +20,17 @@ export const ThemeSwitchInput = styled(Switch)(({ theme }) => ({
       "& + .MuiSwitch-track": {
         opacity: 1,
         backgroundColor:
-          theme.palette.mode === "dark" ? indigo[300] : "#f8bbd0",
+          theme.palette.mode === "dark"
+            ? indigo[300]
+            : theme.palette.secondary.light,
       },
     },
   },
   "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? indigo[200] : "#f48fb1",
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? indigo[200]
+        : theme.palette.secondary.main,
     width: 32,
     height: 32,
     "&::before": {
@@ -44,7 +49,10 @@ export const ThemeSwitchInput = styled(Switch)(({ theme }) => ({
   },
   "& .MuiSwitch-track": {
     opacity: 1,
-    backgroundColor: theme.palette.mode === "dark" ? indigo[300] : "#f8bbd0",
+    backgroundColor:
+      theme.palette.mode === "dark"
+        ? indigo[300]
+        : theme.palette.secondary.light,
     borderRadius: 20 / 2,
   },
 }));

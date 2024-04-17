@@ -6,11 +6,14 @@ import {
   AuthorAvatar,
   AuthorSwitchButton,
 } from "./AuthorPage.styles.tsx";
-import ArticleList from "../../components/ArticleList";
-import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+
 import ErrorPage from "../ErrorPage";
+import ArticleList from "../../components/ArticleList";
 import { LoadingAuthorPage } from "../../components/Loading";
+import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 
 const AuthorPage: FC = () => {
   const { username, data, isFetching, error, handleFollow } = useAuthorPage();
@@ -57,8 +60,15 @@ const AuthorPage: FC = () => {
                 </Typography>
 
                 <Button
-                  sx={{ maxWidth: 100 }}
+                  sx={{ maxWidth: 110 }}
                   size="large"
+                  startIcon={
+                    data.profile.following ? (
+                      <PersonRemoveIcon />
+                    ) : (
+                      <PersonAddIcon />
+                    )
+                  }
                   onClick={() => handleFollow(data.profile.following)}>
                   {data.profile.following ? "Unfollow" : "Follow"}
                 </Button>

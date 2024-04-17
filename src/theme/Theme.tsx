@@ -5,7 +5,7 @@ import {
   PaletteMode,
   ThemeProvider,
 } from "@mui/material";
-import { indigo } from "@mui/material/colors";
+import { indigo, pink } from "@mui/material/colors";
 import { useTypedSelector } from "../hooks/useTypedSelector.tsx";
 
 type ThemeProps = {
@@ -14,11 +14,11 @@ type ThemeProps = {
 
 declare module "@mui/material/styles" {
   interface Palette {
-    dark: Palette["primary"];
+    typography: Palette["primary"];
   }
 
   interface PaletteOptions {
-    dark?: PaletteOptions["primary"];
+    typography?: PaletteOptions["primary"];
   }
 }
 
@@ -40,12 +40,11 @@ export function Theme({ children }: ThemeProps) {
       secondary: {
         main: "#eda7f1",
       },
-      dark: {
-        light: "#2D2D2D",
-        main: "#191919",
+      typography: {
+        main: indigo[200],
       },
       background: {
-        // default: "#171717",
+        // default: "#171717", nice colors
         // paper: "#171717",
         default: "#1a1d24",
         paper: "#1a1d24",
@@ -97,20 +96,19 @@ export function Theme({ children }: ThemeProps) {
       palette: {
         mode,
         primary: {
+          light: indigo[50],
           main: indigo[200],
+          dark: indigo[300],
         },
         secondary: {
-          main: "#eda7f1",
+          main: pink[100],
         },
-        dark: {
-          light: "#2D2D2D",
-          main: "#191919",
+        typography: {
+          main: "#000",
         },
         background: {
-          // default: "#171717",
-          // paper: "#171717",
-          default: "#1a1d24",
-          paper: "#1a1d24",
+          default: "#fff",
+          paper: indigo[50],
         },
       },
 
@@ -122,6 +120,13 @@ export function Theme({ children }: ThemeProps) {
       },
 
       components: {
+        MuiAppBar: {
+          styleOverrides: {
+            colorDefault: {
+              backgroundColor: indigo[50],
+            },
+          },
+        },
         MuiContainer: {
           defaultProps: {
             component: "section",

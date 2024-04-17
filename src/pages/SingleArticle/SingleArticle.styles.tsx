@@ -8,14 +8,6 @@ export const SingleArticleDeleteButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-export const SingleArticleEditButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.success.light,
-
-  "&:hover": {
-    backgroundColor: theme.palette.success.main,
-  },
-}));
-
 export const ArticleWrapper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(3),
 

@@ -8,6 +8,8 @@ import { getLimitedString } from "../../utils/getLimitedString.ts";
 import { useArticleAuthorData } from "./hooks/useArticleAuthorData.tsx";
 import { Link } from "react-router-dom";
 import { AUTHOR_PAGE_URL } from "../../constants";
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 type ArticleAuthorDataProps = {
   author: FollowingUserData;
@@ -52,12 +54,16 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
             />
 
             <Stack spacing={1}>
-              <Typography>
+              <Typography color={(theme) => theme.palette.typography.main}>
                 {author.username === currentUsername ? "You" : author.username}
               </Typography>
 
               {currentUsername !== author.username ? (
-                <Button onClick={() => onFollow(author, isFollow)}>
+                <Button
+                  startIcon={
+                    isFollow ? <PersonRemoveIcon /> : <PersonAddIcon />
+                  }
+                  onClick={() => onFollow(author, isFollow)}>
                   {isFollow ? "Unfollow" : "Follow"}
                 </Button>
               ) : null}

@@ -32,7 +32,7 @@ const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
           <Link to={`${SINGLE_ARTICLE_URL}/${article.slug}`}>
             <Typography
               variant="h5"
-              color="primary"
+              color={(theme) => theme.palette.typography.main}
               sx={{ wordBreak: "break-all" }}>
               {getLimitedString(article.title, 120)}
             </Typography>

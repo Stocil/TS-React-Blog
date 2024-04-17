@@ -1,5 +1,11 @@
 import { FC } from "react";
-import { Container, IconButton, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import {
   ArticleInfoWrapper,
@@ -7,7 +13,6 @@ import {
   ArticleWrapper,
   SingleArticleDeleteButton,
   SingleArticleDescription,
-  SingleArticleEditButton,
 } from "./SingleArticle.styles.tsx";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -48,7 +53,7 @@ const SingleArticle: FC = () => {
               <Stack>
                 <Stack direction="row" alignItems="center">
                   <Typography
-                    color="primary"
+                    color={(theme) => theme.palette.typography.main}
                     variant="h4"
                     sx={{ wordBreak: "break-all" }}>
                     {data.article.title}
@@ -88,7 +93,9 @@ const SingleArticle: FC = () => {
               {isAuthor ? (
                 <Stack direction="row" spacing={1}>
                   <Link to={`${SINGLE_ARTICLE_URL}/${data.article.slug}/edit`}>
-                    <SingleArticleEditButton>Edit</SingleArticleEditButton>
+                    <Button color="success" variant="outlined">
+                      Edit
+                    </Button>
                   </Link>
 
                   <SingleArticleDeleteButton onClick={handleDeleteArticle}>

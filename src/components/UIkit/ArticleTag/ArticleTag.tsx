@@ -5,5 +5,5 @@ export const ArticleTag = styled(Typography)(({ theme }) => ({
   padding: "4px 8px",
   fontSize: theme.typography.subtitle2.fontSize,
   border: "2px solid",
-  borderColor: theme.palette.primary.light,
+  borderColor: theme.palette.primary.dark,
 }));

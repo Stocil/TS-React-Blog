@@ -29,7 +29,7 @@ const Header: FC = () => {
 
   return (
     <>
-      <AppBar>
+      <AppBar color="default">
         <Container>
           <Toolbar disableGutters>
             <HeaderWrapper>
@@ -37,11 +37,11 @@ const Header: FC = () => {
                 <GradientText variant="h4">Real world Blog</GradientText>
               </Link>
 
-              {isLogged ? (
-                <Stack direction="row" spacing={2}>
-                  <Stack direction="row">
-                    <ThemeSwitch />
+              <Stack direction="row">
+                <ThemeSwitch />
 
+                {isLogged ? (
+                  <Stack direction="row" spacing={2}>
                     <Button
                       size="small"
                       variant="outlined"
@@ -49,28 +49,28 @@ const Header: FC = () => {
                       onClick={() => navigate(CREATE_ARTICLE_URL)}>
                       Create article
                     </Button>
+
+                    <Stack direction="row" alignItems="center" spacing={1}>
+                      <Typography>{userData.username}</Typography>
+
+                      <Link to={PROFILE_URL}>
+                        <Avatar
+                          alt="avatar"
+                          src={userData.image ? userData.image : DEF_AVATAR}
+                        />
+                      </Link>
+                    </Stack>
+
+                    <IconButton onClick={handleLogOut}>
+                      <LogoutIcon color="error" />
+                    </IconButton>
                   </Stack>
-
-                  <Stack direction="row" alignItems="center" spacing={1}>
-                    <Typography>{userData.username}</Typography>
-
-                    <Link to={PROFILE_URL}>
-                      <Avatar
-                        alt="avatar"
-                        src={userData.image ? userData.image : DEF_AVATAR}
-                      />
-                    </Link>
-                  </Stack>
-
-                  <IconButton onClick={handleLogOut}>
-                    <LogoutIcon color="error" />
-                  </IconButton>
-                </Stack>
-              ) : (
-                <Link to={SIGN_IN_URL} state={{ prevPath: path }}>
-                  <Button variant="gradient">Sign in</Button>
-                </Link>
-              )}
+                ) : (
+                  <Link to={SIGN_IN_URL} state={{ prevPath: path }}>
+                    <Button variant="gradient">Sign in</Button>
+                  </Link>
+                )}
+              </Stack>
             </HeaderWrapper>
           </Toolbar>
         </Container>
