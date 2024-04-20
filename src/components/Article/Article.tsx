@@ -7,7 +7,7 @@ import {
   ArticleDescription,
   ArticleInfoWrapper,
   ArticleTagsWrapper,
-  ArticleUserInner,
+  ArticleTitle,
   ArticleUserWrapper,
   ArticleWrapper,
 } from "./Article.styles.tsx";
@@ -30,12 +30,7 @@ const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
       <Stack spacing={1}>
         <ArticleInfoWrapper>
           <Link to={`${SINGLE_ARTICLE_URL}/${article.slug}`}>
-            <Typography
-              variant="h5"
-              color={(theme) => theme.palette.typography.main}
-              sx={{ wordBreak: "break-all" }}>
-              {getLimitedString(article.title, 120)}
-            </Typography>
+            <ArticleTitle>{getLimitedString(article.title, 120)}</ArticleTitle>
           </Link>
 
           <Stack direction="row" alignItems="center">
@@ -62,19 +57,17 @@ const Article: FC<ArticleProps> = ({ article, onArticleFollow }) => {
             : null}
         </ArticleTagsWrapper>
 
-        <ArticleDescription>
+        <ArticleDescription variant="body2">
           {getLimitedString(article.description, 500)}
         </ArticleDescription>
       </Stack>
 
       <ArticleUserWrapper>
-        <ArticleUserInner>
-          <ArticleAuthorData
-            author={article.author}
-            isFollow={article.author.following}
-            data={article.createdAt}
-          />
-        </ArticleUserInner>
+        <ArticleAuthorData
+          author={article.author}
+          isFollow={article.author.following}
+          data={article.createdAt}
+        />
       </ArticleUserWrapper>
     </ArticleWrapper>
   );

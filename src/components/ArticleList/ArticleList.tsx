@@ -6,6 +6,7 @@ import { useArticleList } from "./hooks/useArticleList.tsx";
 import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
 import { LoadingArticle } from "../Loading";
+import { usePagination } from "./hooks/usePagination.tsx";
 
 type ArticleListProps = {
   articleOptions?: {
@@ -16,6 +17,8 @@ type ArticleListProps = {
 
 const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
   const loadingArticles = [1, 2, 3, 4, 5];
+
+  const { paginationOptions } = usePagination();
 
   const {
     data,
@@ -72,7 +75,9 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
             count={maxPage}
             page={+currentPage}
             color="secondary"
-            size="large"
+            size={paginationOptions.size}
+            hidePrevButton={paginationOptions.isShowButton}
+            hideNextButton={paginationOptions.isShowButton}
             onChange={(_, page) => handleChangePage(page)}
             sx={{ alignSelf: "center" }}
           />
