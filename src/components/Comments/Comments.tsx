@@ -79,7 +79,9 @@ const Comments: FC = () => {
                   </Typography>
                 </SingleCommentUserInfo>
 
-                <Typography>{comment.body}</Typography>
+                <Typography sx={{ wordBreak: "break-all" }}>
+                  {comment.body}
+                </Typography>
               </Stack>
             </SingleCommentWrapper>
           );
