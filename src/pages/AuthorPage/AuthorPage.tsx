@@ -77,7 +77,7 @@ const AuthorPage: FC = () => {
 
             <AuthorArticlesControl>
               <AuthorSwitchButton
-                sx={{ ml: 9 }}
+                sx={{ ml: { xs: 0, sm: 9 } }}
                 size="large"
                 onClick={() => handleChangeArticlesOption("user")}>
                 Author articles
