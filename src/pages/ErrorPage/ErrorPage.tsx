@@ -2,7 +2,11 @@ import { FC, ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { Container, Stack, Typography } from "@mui/material";
 
-import { FourOFour, SingleArticleErrorButton } from "./ErrorPage.styles.tsx";
+import {
+  ErrorText,
+  FourOFour,
+  SingleArticleErrorButton,
+} from "./ErrorPage.styles.tsx";
 
 type ErrorPageProps = {
   children: ReactNode;
@@ -15,9 +19,7 @@ const ErrorPage: FC<ErrorPageProps> = ({ children, error = "404" }) => {
       <Stack textAlign="center" spacing={2}>
         <FourOFour variant="h2">{error}</FourOFour>
 
-        <Typography variant="h3" color="primary">
-          {children}
-        </Typography>
+        <ErrorText color="primary">{children}</ErrorText>
 
         <Link to="/">
           <SingleArticleErrorButton size="large" variant="gradient">
