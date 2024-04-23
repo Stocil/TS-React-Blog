@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { Skeleton, Stack } from "@mui/material";
+import { LoadingAuthorAvatar } from "./LoadingAuthorPage.styles.tsx";
 
 export const LoadingAuthorPage: FC = () => {
   return (
     <Stack alignItems="center" spacing={4}>
-      <Skeleton variant="circular" width={350} height={350} />
+      <LoadingAuthorAvatar variant="circular" />
 
       <Skeleton variant="rounded" width={150} height={20} />
 

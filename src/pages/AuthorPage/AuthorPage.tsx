@@ -40,59 +40,57 @@ const AuthorPage: FC = () => {
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
       {data ? (
-        <Stack spacing={5} alignItems="center">
-          <>
-            <Stack spacing={3} alignItems="center">
-              <AuthorAvatar
-                alt="author avatar"
-                src={data.profile.image}
-                sx={{
-                  border: (theme) =>
-                    data.profile.following
-                      ? `5px solid ${theme.palette.secondary.main}`
-                      : null,
-                }}
-              />
+        <Stack spacing={5} alignItems={{ xs: "center", sm: "unset" }}>
+          <Stack spacing={3} alignItems="center">
+            <AuthorAvatar
+              alt="author avatar"
+              src={data.profile.image}
+              sx={{
+                border: (theme) =>
+                  data.profile.following
+                    ? `5px solid ${theme.palette.secondary.main}`
+                    : null,
+              }}
+            />
 
-              <Stack spacing={2} alignItems="center">
-                <Typography component="h3" variant="h4" textAlign="center">
-                  {data.profile.username}
-                </Typography>
+            <Stack spacing={2} alignItems="center">
+              <Typography component="h3" variant="h4" textAlign="center">
+                {data.profile.username}
+              </Typography>
 
-                <Button
-                  sx={{ maxWidth: 110 }}
-                  size="large"
-                  startIcon={
-                    data.profile.following ? (
-                      <PersonRemoveIcon />
-                    ) : (
-                      <PersonAddIcon />
-                    )
-                  }
-                  onClick={() => handleFollow(data.profile.following)}>
-                  {data.profile.following ? "Unfollow" : "Follow"}
-                </Button>
-              </Stack>
+              <Button
+                sx={{ maxWidth: 110 }}
+                size="large"
+                startIcon={
+                  data.profile.following ? (
+                    <PersonRemoveIcon />
+                  ) : (
+                    <PersonAddIcon />
+                  )
+                }
+                onClick={() => handleFollow(data.profile.following)}>
+                {data.profile.following ? "Unfollow" : "Follow"}
+              </Button>
             </Stack>
+          </Stack>
 
-            <AuthorArticlesControl>
-              <AuthorSwitchButton
-                sx={{ ml: { xs: 0, sm: 9 } }}
-                size="large"
-                onClick={() => handleChangeArticlesOption("user")}>
-                Author articles
-              </AuthorSwitchButton>
+          <AuthorArticlesControl>
+            <AuthorSwitchButton
+              sx={{ ml: { xs: 0, sm: 9 } }}
+              size="large"
+              onClick={() => handleChangeArticlesOption("user")}>
+              Author articles
+            </AuthorSwitchButton>
 
-              <CompareArrowsIcon fontSize="large" />
+            <CompareArrowsIcon fontSize="large" />
 
-              <AuthorSwitchButton
-                size="large"
-                color="secondary"
-                onClick={() => handleChangeArticlesOption("favorited")}>
-                Author favorited articles
-              </AuthorSwitchButton>
-            </AuthorArticlesControl>
-          </>
+            <AuthorSwitchButton
+              size="large"
+              color="secondary"
+              onClick={() => handleChangeArticlesOption("favorited")}>
+              Author favorited articles
+            </AuthorSwitchButton>
+          </AuthorArticlesControl>
 
           <ArticleList articleOptions={articleOptions} />
         </Stack>
