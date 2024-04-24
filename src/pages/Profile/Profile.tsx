@@ -112,7 +112,7 @@ const Profile: FC = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{ mb: 2 }}>
       <ProfileWrapper spacing={5}>
         <ProfileInner>
           <FormWrapper
@@ -179,10 +179,10 @@ const Profile: FC = () => {
               Favorite articles
             </ProfileSwitchButton>
           </ProfileArticleControl>
-
-          <ArticleList articleOptions={articleOptions} />
         </Stack>
       </ProfileWrapper>
+
+      <ArticleList articleOptions={articleOptions} />
 
       <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen} />
     </Container>

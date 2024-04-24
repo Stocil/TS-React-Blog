@@ -58,7 +58,12 @@ const CreateArticle = () => {
     <Container sx={{ mt: 8, mb: 4 }}>
       <Stack alignItems="center" justifyContent="center">
         <FormWrapper
-          sx={{ width: "100%", justifyContent: "start", alignItems: "start" }}>
+          sx={{
+            width: "100%",
+            justifyContent: "start",
+            alignItems: "start",
+            gap: "24px",
+          }}>
           <GradientText variant="h4" alignSelf="center">
             Create new article
           </GradientText>

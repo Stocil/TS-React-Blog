@@ -34,7 +34,7 @@ const Comments: FC = () => {
 
   return (
     <Stack spacing={2} mt={4}>
-      <Typography variant="h3">Comments</Typography>
+      <Typography variant="h4">Comments</Typography>
 
       <CommentWrapper>
         <Typography component="p" variant="h6" fontWeight={700}>

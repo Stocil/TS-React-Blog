@@ -40,7 +40,7 @@ const AuthorPage: FC = () => {
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
       {data ? (
-        <Stack spacing={5} alignItems={{ xs: "center", sm: "unset" }}>
+        <Stack spacing={5}>
           <Stack spacing={3} alignItems="center">
             <AuthorAvatar
               alt="author avatar"

@@ -32,7 +32,7 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
 
   if (error) {
     return (
-      <ErrorMessage variant="h3" margin="0 auto">
+      <ErrorMessage variant="h3" margin="0 auto" alignSelf="center">
         An error occurred while fetching the articles
       </ErrorMessage>
     );
