@@ -2,6 +2,7 @@ import { useTypedSelector } from "../../../hooks/useTypedSelector.tsx";
 import { useActions } from "../../../hooks/useActions.tsx";
 import { LOCAL_STORAGE_USER_KEY } from "../../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function useHeader() {
   const path = useLocation().pathname;
@@ -16,5 +17,19 @@ export function useHeader() {
     localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
   }
 
-  return { path, userData, isLogged, handleLogOut, navigate } as const;
+  const [menuOpen, setMenuOpen] = useState(false);
+  function handleToggleMenu() {
+    setMenuOpen((current) => !current);
+  }
+
+  return {
+    path,
+    userData,
+    isLogged,
+    handleLogOut,
+    navigate,
+
+    menuOpen,
+    handleToggleMenu,
+  } as const;
 }
