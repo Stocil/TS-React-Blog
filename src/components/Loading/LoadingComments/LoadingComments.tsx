@@ -21,11 +21,11 @@ export const LoadingComments: FC = () => {
         {comments.map((comment) => {
           return (
             <Stack key={comment} direction="row" alignItems="start" spacing={1}>
-              <Skeleton variant="circular" width={45} height={45} />
+              <Skeleton variant="circular" sx={{ minWidth: 45 }} height={45} />
 
-              <Stack spacing={1}>
+              <Stack spacing={1} width={1000}>
                 <Skeleton variant="text" width={150} />
-                <Skeleton variant="rounded" width={1000} height={70} />
+                <Skeleton variant="rounded" width="90%" height={70} />
               </Stack>
             </Stack>
           );

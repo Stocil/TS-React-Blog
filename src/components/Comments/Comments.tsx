@@ -34,7 +34,7 @@ const Comments: FC = () => {
 
   return (
     <Stack spacing={2} mt={4}>
-      <Typography variant="h3">Comments</Typography>
+      <Typography variant="h4">Comments</Typography>
 
       <CommentWrapper>
         <Typography component="p" variant="h6" fontWeight={700}>
@@ -79,7 +79,9 @@ const Comments: FC = () => {
                   </Typography>
                 </SingleCommentUserInfo>
 
-                <Typography>{comment.body}</Typography>
+                <Typography sx={{ wordBreak: "break-all" }}>
+                  {comment.body}
+                </Typography>
               </Stack>
             </SingleCommentWrapper>
           );

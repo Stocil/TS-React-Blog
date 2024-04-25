@@ -3,12 +3,12 @@ import { ArticleWrapper } from "../../../pages/SingleArticle/SingleArticle.style
 import { Skeleton, Stack } from "@mui/material";
 
 export const LoadingSingleArticle: FC = () => {
-  const tags = [1, 2, 3, 4, 5];
+  const tags = [1, 2, 3];
 
   return (
     <ArticleWrapper>
       <Stack spacing={2}>
-        <Skeleton animation="wave" variant="rounded" width="100%" height={40} />
+        <Skeleton animation="wave" variant="rounded" width="80%" height={40} />
 
         <Stack direction="row" spacing={1}>
           {tags.map((tag) => (
@@ -24,7 +24,7 @@ export const LoadingSingleArticle: FC = () => {
         />
       </Stack>
 
-      <Skeleton animation="wave" variant="rounded" width="100%" height={200} />
+      <Skeleton animation="wave" variant="rounded" width="90%" height={200} />
     </ArticleWrapper>
   );
 };

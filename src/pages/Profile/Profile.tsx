@@ -1,6 +1,5 @@
 import { FC } from "react";
 import {
-  Avatar,
   Button,
   Container,
   FormControl,
@@ -16,23 +15,25 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Visibility from "@mui/icons-material/Visibility";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 
+import { UpdateInputFields } from "../../types/form.tsx";
 import { DEF_AVATAR } from "../../constants";
 import FormWrapper from "../../components/UIkit/FormWrapper";
 import GradientText from "../../components/UIkit/GradientText";
 import ArticleList from "../../components/ArticleList";
 import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
-import { UpdateInputFields } from "../../types/form.tsx";
+import { LoadingButton } from "../../components/Loading";
 import { useProfile } from "./hooks/useProfile.tsx";
 import { useProfileForm } from "./hooks/useProfileForm.tsx";
 import { useRenderProfileForm } from "./hooks/useRenderProfileForm.tsx";
 import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 import {
   ProfileArticleControl,
+  ProfileAvatar,
+  ProfileDataWrapper,
   ProfileInner,
   ProfileSwitchButton,
   ProfileWrapper,
 } from "./Profile.styles.tsx";
-import { LoadingButton } from "../../components/Loading";
 
 const Profile: FC = () => {
   const {
@@ -111,22 +112,25 @@ const Profile: FC = () => {
   };
 
   return (
-    <Container>
+    <Container sx={{ mb: 2 }}>
       <ProfileWrapper spacing={5}>
         <ProfileInner>
           <FormWrapper
             elevation={8}
-            sx={{ gap: 3, flexGrow: 1, maxWidth: 700 }}>
+            sx={{
+              gap: 3,
+              flexGrow: 1,
+              maxWidth: 700,
+            }}>
             <GradientText variant="h4">Profile editing</GradientText>
 
-            <Stack direction="row" spacing={3}>
-              <Avatar
+            <ProfileDataWrapper>
+              <ProfileAvatar
                 alt="user avatar"
                 src={user?.image ? user?.image : DEF_AVATAR}
-                sx={{ width: 250, height: 250, mt: "30px" }}
               />
 
-              <form className="auth__form" onSubmit={handleSubmit(onSubmit)}>
+              <form className="profile__form" onSubmit={handleSubmit(onSubmit)}>
                 {renderFields(fields)}
 
                 {errors.root ? (
@@ -154,7 +158,7 @@ const Profile: FC = () => {
                   </Button>
                 )}
               </form>
-            </Stack>
+            </ProfileDataWrapper>
           </FormWrapper>
         </ProfileInner>
 
@@ -175,10 +179,10 @@ const Profile: FC = () => {
               Favorite articles
             </ProfileSwitchButton>
           </ProfileArticleControl>
-
-          <ArticleList articleOptions={articleOptions} />
         </Stack>
       </ProfileWrapper>
+
+      <ArticleList articleOptions={articleOptions} />
 
       <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen} />
     </Container>

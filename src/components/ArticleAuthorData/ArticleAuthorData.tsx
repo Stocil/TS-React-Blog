@@ -3,7 +3,11 @@ import { Button, Stack, Typography } from "@mui/material";
 
 import { ArticleUserAvatar } from "../Article/Article.styles.tsx";
 import { FollowingUserData } from "../../types/user.tsx";
-import { HtmlTooltip } from "./ArticleAuthorData.styles.tsx";
+import {
+  ArticleUserInner,
+  ArticleUsername,
+  HtmlTooltip,
+} from "./ArticleAuthorData.styles.tsx";
 import { getLimitedString } from "../../utils/getLimitedString.ts";
 import { useArticleAuthorData } from "./hooks/useArticleAuthorData.tsx";
 import { Link } from "react-router-dom";
@@ -26,11 +30,11 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
     useArticleAuthorData(data);
 
   return (
-    <Stack direction="row" spacing={1}>
+    <ArticleUserInner>
       <Stack textAlign="right">
-        <Typography variant="h6">
+        <ArticleUsername variant="h6">
           {getLimitedString(author.username, 15)}
-        </Typography>
+        </ArticleUsername>
 
         {data ? (
           <Typography variant="subtitle2" sx={{ opacity: 0.5 }}>
@@ -81,6 +85,6 @@ export const ArticleAuthorData: FC<ArticleAuthorDataProps> = ({
           />
         </Link>
       </HtmlTooltip>
-    </Stack>
+    </ArticleUserInner>
   );
 };

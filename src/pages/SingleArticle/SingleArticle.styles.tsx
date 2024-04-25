@@ -16,11 +16,16 @@ export const ArticleWrapper = styled(Paper)(({ theme }) => ({
   gap: theme.spacing(3),
 }));
 
-export const ArticleInfoWrapper = styled(Stack)({
+export const ArticleInfoWrapper = styled(Stack)(({ theme }) => ({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "start",
-});
+  gap: theme.spacing(2),
+
+  [theme.breakpoints.down("ss")]: {
+    flexDirection: "column",
+  },
+}));
 
 export const ArticleTagsWrapper = styled(Stack)(({ theme }) => ({
   flexDirection: "row",

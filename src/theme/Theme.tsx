@@ -13,6 +13,13 @@ type ThemeProps = {
 };
 
 declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    ss: true;
+    big: true;
+  }
+}
+
+declare module "@mui/material/styles" {
   interface Palette {
     typography: Palette["primary"];
   }
@@ -89,6 +96,18 @@ export function Theme({ children }: ThemeProps) {
         },
       },
     },
+
+    breakpoints: {
+      values: {
+        xs: 0,
+        ss: 500,
+        sm: 600,
+        big: 700,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
+    },
   });
 
   if (mode === "light") {
@@ -155,6 +174,18 @@ export function Theme({ children }: ThemeProps) {
               textTransform: "none",
             },
           },
+        },
+      },
+
+      breakpoints: {
+        values: {
+          xs: 0,
+          ss: 500,
+          sm: 600,
+          big: 700,
+          md: 900,
+          lg: 1200,
+          xl: 1536,
         },
       },
     });

@@ -44,7 +44,9 @@ const articlesApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getArticles: builder.query<ArticlesResponseType, getArticlesProps>({
       query: ({ token, page, author, favorited }) => ({
-        url: `/articles?limit=5&offset=${page === 0 ? 0 : (page - 1) * 5}${author ? `&author=${author}` : ""}${favorited ? `&favorited=${favorited}` : ""}`,
+        url: `/articles?limit=5&offset=${page === 0 ? 0 : (page - 1) * 5}${
+          author ? `&author=${author}` : ""
+        }${favorited ? `&favorited=${favorited}` : ""}`,
         headers: {
           "Content-Type": "application/json;charset=utf-8",
           Authorization: token,

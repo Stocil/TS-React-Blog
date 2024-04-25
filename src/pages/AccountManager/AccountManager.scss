@@ -1,11 +1,24 @@
 .auth {
   &__form {
     padding-top: 30px;
-    width: 350px;
+    width: 370px;
     display: flex;
     flex-direction: column;
     gap: 24px;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 1000px) {
+      width: 300px;
+    }
+
+    @media (max-width: 900px) {
+      width: 350px;
+    }
+
+    @media (max-width: 400px) {
+      width: 260px;
+    }
+
   }
 }
