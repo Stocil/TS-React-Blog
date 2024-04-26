@@ -37,19 +37,19 @@ body {
   
   background-image: url('/assets/bgDark.svg');
 
-  // scrollbar-width: thin;
-  // scrollbar-color: #ba68c8 transparent;
+   scrollbar-width: thin;
+   scrollbar-color: #9fa8da transparent;
 
-  // &::-webkit-scrollbar {
-  //   width: 10px;
-  //   height: 10px;
-  //   background-color: transparent;
-  // }
+   &::-webkit-scrollbar {
+     width: 10px;
+     height: 10px;
+     background-color: transparent;
+   }
 
-  // &::-webkit-scrollbar-thumb {
-  //   background-color: #ba68c8;
-  //   border-radius: 10px;
-  // }
+   &::-webkit-scrollbar-thumb {
+     background-color: #9fa8da;
+     border-radius: 10px;
+   }
 }
 
 .container {
