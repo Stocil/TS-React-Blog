@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 
 import {
   ErrorText,

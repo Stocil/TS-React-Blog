@@ -6,6 +6,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArticleIcon from "@mui/icons-material/Article";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
 import {
   HeaderBurgerInner,
@@ -93,6 +94,19 @@ const HeaderBurgerMenu: FC<HeaderBurgerMenuProps> = ({
 
               <Typography variant="h5" component="p">
                 Favourite
+              </Typography>
+            </Link>
+          </Stack>
+
+          <Stack direction="row" alignItems="center" spacing={1}>
+            <Link
+              to="/create"
+              onClick={handleToggleMenu}
+              className="header-menu__link">
+              <AddBoxIcon />
+
+              <Typography variant="h5" component="p">
+                Create article
               </Typography>
             </Link>
           </Stack>

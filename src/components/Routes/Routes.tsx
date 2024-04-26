@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 
 import Profile from "../../pages/Profile";
 import HomePage from "../../pages/HomePage";
@@ -19,7 +19,7 @@ import SingleArticle from "../../pages/SingleArticle";
 import ErrorPage from "../../pages/ErrorPage";
 
 const AppRoutes = () => {
-  const router = createBrowserRouter([
+  const router = createHashRouter([
     {
       element: <Header />,
       children: [
