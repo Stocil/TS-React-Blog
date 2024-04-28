@@ -27,15 +27,18 @@ import { Link } from "react-router-dom";
 import { SINGLE_ARTICLE_URL } from "../../constants";
 import Comments from "../../components/Comments";
 import { LoadingSingleArticle } from "../../components/Loading";
+import { AlertSnackbar } from "../../components/UIkit/Snackbar/AlertSnackbar.tsx";
 
 const SingleArticle: FC = () => {
   const {
+    article,
+    isSnackOpen,
     isFetching,
     isAuthor,
     error,
-    data,
     handleFollow,
     handleDeleteArticle,
+    handleSnackOpen,
   } = useSingleArticle();
 
   if (error) {
@@ -46,7 +49,7 @@ const SingleArticle: FC = () => {
     <Container sx={{ mt: 8, mb: 4 }}>
       {isFetching ? (
         <LoadingSingleArticle />
-      ) : data ? (
+      ) : article ? (
         <>
           <ArticleWrapper>
             <ArticleInfoWrapper>
@@ -56,27 +59,27 @@ const SingleArticle: FC = () => {
                     color={(theme) => theme.palette.typography.main}
                     variant="h4"
                     sx={{ wordBreak: "break-all" }}>
-                    {data.article.title}
+                    {article.title}
                   </Typography>
 
                   <Stack direction="row" alignItems="center">
                     <IconButton
                       onClick={() =>
-                        handleFollow(data.article.slug, data.article.favorited)
+                        handleFollow(article.slug, article.favorited)
                       }>
-                      {data.article.favorited ? (
+                      {article.favorited ? (
                         <FavoriteIcon />
                       ) : (
                         <FavoriteBorderIcon />
                       )}
                     </IconButton>
 
-                    <Typography>{data.article.favoritesCount}</Typography>
+                    <Typography>{article.favoritesCount}</Typography>
                   </Stack>
                 </Stack>
 
                 <ArticleTagsWrapper>
-                  {data.article.tagList?.map((tag, index) => {
+                  {article.tagList?.map((tag, index) => {
                     return (
                       <ArticleTag key={tag + index}>
                         {getLimitedString(tag, 10)}
@@ -86,13 +89,13 @@ const SingleArticle: FC = () => {
                 </ArticleTagsWrapper>
 
                 <SingleArticleDescription variant="subtitle2">
-                  {data.article.description}
+                  {article.description}
                 </SingleArticleDescription>
               </Stack>
 
               {isAuthor ? (
                 <Stack direction="row" spacing={1}>
-                  <Link to={`${SINGLE_ARTICLE_URL}/${data.article.slug}/edit`}>
+                  <Link to={`${SINGLE_ARTICLE_URL}/${article.slug}/edit`}>
                     <Button color="success" variant="outlined">
                       Edit
                     </Button>
@@ -108,11 +111,18 @@ const SingleArticle: FC = () => {
             <Markdown
               remarkPlugins={[remarkGfm]}
               className="single-article__body">
-              {data.article.body}
+              {article.body}
             </Markdown>
           </ArticleWrapper>
 
           <Comments />
+
+          <AlertSnackbar
+            color="error"
+            open={isSnackOpen}
+            handleClose={handleSnackOpen}>
+            Failed to (un)favorite an article
+          </AlertSnackbar>
         </>
       ) : null}
     </Container>

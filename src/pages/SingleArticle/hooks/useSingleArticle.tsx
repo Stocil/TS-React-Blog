@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 import { getToken } from "../../../utils/getToken.ts";
 import { useToggleArticleFollow } from "../../../hooks/useToggleArticleFollow.tsx";
@@ -7,14 +8,18 @@ import {
   useDeleteArticleMutation,
   useGetSingleArticleQuery,
 } from "../../../store/api/articlesApi.ts";
+import { useActions } from "../../../hooks/useActions.tsx";
 
 export const useSingleArticle = () => {
   const navigate = useNavigate();
-  const { handleFollow } = useToggleArticleFollow();
+  const { isSnackOpen, handleFollow, handleSnackOpen } =
+    useToggleArticleFollow();
   const [deleteArticle] = useDeleteArticleMutation();
   const { slug } = useParams();
+  const { getSingleArticle } = useActions();
 
   const user = useTypedSelector((state) => state.user.user);
+  const article = useTypedSelector((state) => state.articles.singleArticle);
   const token = getToken(user.token);
 
   const { data, error, isFetching } = useGetSingleArticleQuery({
@@ -31,12 +36,20 @@ export const useSingleArticle = () => {
     navigate(-1);
   }
 
+  useEffect(() => {
+    if (data) {
+      getSingleArticle(data.article);
+    }
+  }, [getSingleArticle, data]);
+
   return {
-    data,
+    article,
+    isSnackOpen,
     error,
     isFetching,
     isAuthor,
     handleFollow,
     handleDeleteArticle,
+    handleSnackOpen,
   };
 };

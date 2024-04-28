@@ -52,6 +52,9 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
+
+      keepUnusedDataFor: 0,
+
       providesTags: (result) =>
         result
           ? [
@@ -76,6 +79,8 @@ const articlesApi = api.injectEndpoints({
         },
       }),
 
+      keepUnusedDataFor: 0,
+
       providesTags: ["SingleArticle"],
     }),
 
@@ -91,7 +96,6 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
-      invalidatesTags: ["Article", "SingleArticle"],
     }),
 
     unfavoriteAnArticle: builder.mutation<
@@ -106,7 +110,6 @@ const articlesApi = api.injectEndpoints({
           Authorization: token,
         },
       }),
-      invalidatesTags: ["Article", "SingleArticle"],
     }),
 
     createArticle: builder.mutation<

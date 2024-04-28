@@ -13,7 +13,8 @@ type ArticleListProps = {
 } | null;
 
 export const useArticleList = (articleOptions: ArticleListProps) => {
-  const { handleFollow } = useToggleArticleFollow();
+  const { isSnackOpen, handleFollow, handleSnackOpen } =
+    useToggleArticleFollow();
   const { getArticles } = useActions();
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get("page") || "1";
@@ -21,6 +22,7 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   const currentFavorited = searchParams.get("favorited") || "";
 
   const user = useTypedSelector((state) => state.user.user);
+  const articles = useTypedSelector((state) => state.articles.articles);
   const token = getToken(user.token);
 
   const { data, error, isFetching } = useGetArticlesQuery({
@@ -49,12 +51,14 @@ export const useArticleList = (articleOptions: ArticleListProps) => {
   }
 
   return {
-    data,
+    isSnackOpen,
+    articles,
     isFetching,
     error,
     currentPage,
     maxPage,
     handleChangePage,
     handleFollow,
+    handleSnackOpen,
   };
 };

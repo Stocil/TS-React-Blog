@@ -7,6 +7,7 @@ import Article from "../Article";
 import { ErrorMessage } from "../UIkit/ErrorMessage/ErrorMessage.tsx";
 import { LoadingArticle } from "../Loading";
 import { usePagination } from "./hooks/usePagination.tsx";
+import { AlertSnackbar } from "../UIkit/Snackbar/AlertSnackbar.tsx";
 
 type ArticleListProps = {
   articleOptions?: {
@@ -21,13 +22,15 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
   const { paginationOptions } = usePagination();
 
   const {
-    data,
+    isSnackOpen,
+    articles,
     isFetching,
     error,
     currentPage,
     maxPage,
     handleChangePage,
     handleFollow,
+    handleSnackOpen,
   } = useArticleList(articleOptions);
 
   if (error) {
@@ -51,9 +54,9 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
   return (
     <>
       <Stack spacing={3}>
-        {data ? (
-          data.articles[0] ? (
-            data.articles.map((article) => {
+        {articles ? (
+          articles[0] ? (
+            articles.map((article) => {
               return (
                 <Article
                   key={uuidv4()}
@@ -82,6 +85,13 @@ const ArticleList: FC<ArticleListProps> = ({ articleOptions = null }) => {
             sx={{ alignSelf: "center" }}
           />
         ) : null}
+
+        <AlertSnackbar
+          color="error"
+          open={isSnackOpen}
+          handleClose={handleSnackOpen}>
+          Failed to (un)favorite an article
+        </AlertSnackbar>
       </Stack>
     </>
   );

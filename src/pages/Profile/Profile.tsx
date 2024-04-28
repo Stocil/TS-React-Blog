@@ -184,7 +184,9 @@ const Profile: FC = () => {
 
       <ArticleList articleOptions={articleOptions} />
 
-      <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen} />
+      <AlertSnackbar open={isSnackOpen} handleClose={handleSnackOpen}>
+        The data has been successfully changed
+      </AlertSnackbar>
     </Container>
   );
 };
