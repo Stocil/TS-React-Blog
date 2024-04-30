@@ -16,7 +16,7 @@ import { LoadingAuthorPage } from "../../components/Loading";
 import { useArticleOptions } from "../../hooks/useArticleOptions.tsx";
 
 const AuthorPage: FC = () => {
-  const { username, data, isFetching, error, handleFollow } = useAuthorPage();
+  const { username, author, isFetching, error, handleFollow } = useAuthorPage();
   const { articleOptions, handleChangeArticlesOption } = useArticleOptions(
     username ? username : ""
   );
@@ -39,15 +39,15 @@ const AuthorPage: FC = () => {
 
   return (
     <Container sx={{ mt: 8, mb: 4 }}>
-      {data ? (
+      {author ? (
         <Stack spacing={5}>
           <Stack spacing={3} alignItems="center">
             <AuthorAvatar
               alt="author avatar"
-              src={data.profile.image}
+              src={author.image}
               sx={{
                 border: (theme) =>
-                  data.profile.following
+                  author.following
                     ? `5px solid ${theme.palette.secondary.main}`
                     : null,
               }}
@@ -55,21 +55,17 @@ const AuthorPage: FC = () => {
 
             <Stack spacing={2} alignItems="center">
               <Typography component="h3" variant="h4" textAlign="center">
-                {data.profile.username}
+                {author.username}
               </Typography>
 
               <Button
                 sx={{ maxWidth: 110 }}
                 size="large"
                 startIcon={
-                  data.profile.following ? (
-                    <PersonRemoveIcon />
-                  ) : (
-                    <PersonAddIcon />
-                  )
+                  author.following ? <PersonRemoveIcon /> : <PersonAddIcon />
                 }
-                onClick={() => handleFollow(data.profile.following)}>
-                {data.profile.following ? "Unfollow" : "Follow"}
+                onClick={handleFollow}>
+                {author.following ? "Unfollow" : "Follow"}
               </Button>
             </Stack>
           </Stack>

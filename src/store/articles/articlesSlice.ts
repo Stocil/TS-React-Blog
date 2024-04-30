@@ -12,6 +12,11 @@ type FavouriteAnArticlePayload = {
   follow: boolean;
 };
 
+type FavoriteUserPayload = {
+  username: string;
+  isFollow: boolean;
+};
+
 const initialState: ArticlesInitialStateType = {
   articles: [],
   singleArticle: {},
@@ -52,6 +57,19 @@ export const articlesSlice = createSlice({
           ? state.singleArticle.favoritesCount + 1
           : state.singleArticle.favoritesCount - 1;
       }
+    },
+
+    toggleArticleUserFollow: (
+      state,
+      action: PayloadAction<FavoriteUserPayload>
+    ) => {
+      state.articles = state.articles.map((article) => {
+        if (article.author.username === action.payload.username) {
+          article.author.following = !action.payload.isFollow;
+        }
+
+        return article;
+      });
     },
   },
 });
