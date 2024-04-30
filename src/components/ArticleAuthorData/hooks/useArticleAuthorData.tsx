@@ -7,6 +7,7 @@ import {
 } from "../../../store/api/userApi.ts";
 import { FollowingUserData } from "../../../types/user.tsx";
 import { SIGN_IN_URL } from "../../../constants";
+import { useActions } from "../../../hooks/useActions.tsx";
 
 export const useArticleAuthorData = (data: string | null = null) => {
   const path = useLocation().pathname;
@@ -17,6 +18,7 @@ export const useArticleAuthorData = (data: string | null = null) => {
 
   const [follow] = useFollowToUserMutation();
   const [unfollow] = useUnfollowFromUserMutation();
+  const { toggleArticleUserFollow, followOnAuthorPage } = useActions();
 
   const formattedData = new Date(data ? data : "").toLocaleDateString("en", {
     month: "long",
@@ -26,6 +28,13 @@ export const useArticleAuthorData = (data: string | null = null) => {
 
   function onFollow(userToFollow: FollowingUserData, isFollow: boolean) {
     if (token) {
+      toggleArticleUserFollow({
+        username: userToFollow.username,
+        isFollow: isFollow,
+      });
+
+      followOnAuthorPage({ isFollow: isFollow });
+
       if (isFollow) {
         unfollow({ username: userToFollow.username, token: token });
       } else {

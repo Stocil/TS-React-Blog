@@ -58,10 +58,6 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: (_result, _error, arg) => [
-        { type: "Article", id: arg.username },
-        { type: "Author", id: arg.username },
-      ],
     }),
 
     unfollowFromUser: builder.mutation<FollowingUser, UserQuery>({
@@ -73,10 +69,6 @@ const userApi = api.injectEndpoints({
         },
         body: username,
       }),
-      invalidatesTags: (_result, _error, arg) => [
-        { type: "Article", id: arg.username },
-        { type: "Author", id: arg.username },
-      ],
     }),
 
     getProfile: builder.query<FollowingUser, getProfileProps>({
@@ -90,6 +82,8 @@ const userApi = api.injectEndpoints({
       providesTags: (_result, _error, arg) => [
         { type: "Author", id: arg.username },
       ],
+
+      keepUnusedDataFor: 0,
     }),
   }),
   overrideExisting: false,
